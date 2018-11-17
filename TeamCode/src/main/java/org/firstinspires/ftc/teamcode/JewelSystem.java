@@ -46,13 +46,13 @@ public class JewelSystem {
         jewelWrist.setPosition(INIT_WRIST);
         //colorSensor.enableLed(false);
     }
-    public void armPos(ArmServoPosition position){
-        if (position == ArmServoPosition.TOP) {
+    /*public void armPos(LiftDirection position){
+        if (position == LiftDirection.TOP) {
             jewelArm.setPosition(TOP_SERVO);
-        }else if (position == ArmServoPosition.BOTTOM) {
+        }else if (position == LiftDirection.BOTTOM) {
             jewelArm.setPosition(BOTTOM_SERVO);
         }
-    }
+    }*/
     public void wristPos(WristServoPosition direction){
         if (direction == WristServoPosition.RIGHT) {
             jewelWrist.setPosition(FLICK_RIGHT);
@@ -68,22 +68,22 @@ public class JewelSystem {
         if (onOff == true){colorSensor.enableLed(true);
         }else if (onOff == false){colorSensor.enableLed(false);}
     }
-    public JewelColor colorSens() {
+    /*public HookOnOff colorSens() {
         colorSensor.enableLed(true);
             red   = colorSensor.red();
             green = colorSensor.green();
             blue  = colorSensor.blue();
             if (colorSensor.red() > colorSensor.blue()) {
                 colorSensor.enableLed(false);
-                return JewelColor.UNKNOWN;
+                //return HookOnOff.UNKNOWN;
             }else if (colorSensor.blue() > colorSensor.red()) {
                 colorSensor.enableLed(false);
-                return JewelColor.UNKNOWN;
+                //return HookOnOff.UNKNOWN;
             }else {
             colorSensor.enableLed(false);
-            return JewelColor.UNKNOWN;
+            //return HookOnOff.UNKNOWN;
         }
-    }
+    }*/
     public double getWristPosition() {return jewelWrist.getPosition();}
     public double getArmPosition(){
         return jewelArm.getPosition();
