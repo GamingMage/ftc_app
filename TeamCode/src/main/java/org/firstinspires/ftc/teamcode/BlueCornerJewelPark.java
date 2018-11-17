@@ -19,7 +19,7 @@ public class BlueCornerJewelPark extends OpMode{
     LiftSystem gilgearmesh = new LiftSystem();
 
     JewelSystem sensArm = new JewelSystem();
-    JewelColor jewelColor = JewelColor.UNKNOWN;
+    //HookOnOff jewelColor = HookOnOff.UNKNOWN;
     double time;
 
 
@@ -54,7 +54,7 @@ public class BlueCornerJewelPark extends OpMode{
 
         //telemetry.addData("Key",glyph);
         telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
-        telemetry.addData("Color",jewelColor);
+        //telemetry.addData("Color",jewelColor);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
     }
@@ -74,7 +74,7 @@ public class BlueCornerJewelPark extends OpMode{
             case 0:
                 runtime.reset();
                 telemetry.addData("Arm",gilgearmesh.getArmPosition());
-                telemetry.addData("Color",jewelColor);
+                //telemetry.addData("Color",jewelColor);
                 telemetry.addData("Case",stateMachineFlow);
                 telemetry.update();
                 time = getRuntime();
