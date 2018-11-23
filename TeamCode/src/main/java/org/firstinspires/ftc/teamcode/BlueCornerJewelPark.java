@@ -18,8 +18,6 @@ public class BlueCornerJewelPark extends OpMode{
     RelicRecoveryVuMark glyph;
     LiftSystem gilgearmesh = new LiftSystem();
 
-    JewelSystem sensArm = new JewelSystem();
-    //HookOnOff jewelColor = HookOnOff.UNKNOWN;
     double time;
 
 
@@ -40,7 +38,7 @@ public class BlueCornerJewelPark extends OpMode{
         gilgearmesh.init(hardwareMap);
         telemetry.addData("after gilgearmesh","here");
         telemetry.update();
-        sensArm.init(hardwareMap);
+
         telemetry.addData("after init","here");
         telemetry.update();
 
@@ -49,8 +47,6 @@ public class BlueCornerJewelPark extends OpMode{
         //wait needed? Also... guessed parameters
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
-
-        sensArm.colorLED(false);
 
         //telemetry.addData("Key",glyph);
         telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
