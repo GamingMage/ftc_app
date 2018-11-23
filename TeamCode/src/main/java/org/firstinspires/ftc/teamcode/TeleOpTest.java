@@ -10,27 +10,63 @@ public class TeleOpTest extends OpMode {
 
     RoverDrive    robot   =  new RoverDrive();
     CollectSystem sweeper =  new CollectSystem();
+    LiftSystem    lift    =  new LiftSystem();
 
     @Override
     public void init() {
         robot.init(hardwareMap);
         sweeper.init(hardwareMap);
+        lift.init(hardwareMap);
         //the lines below allow the control drive method to work
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sweeper.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Hello","this is a test");
     }
     @Override
     public void loop() {
+        //manual control of the drive motors
         robot.controlDrive(gamepad1.left_stick_y,gamepad1.right_stick_y);
+
+        //manual control of the sweeper
         sweeper.controlDrive(gamepad1.right_trigger);
         sweeper.controlDrive(-gamepad1.left_trigger);
+
+        //Setting hook position
+        if (gamepad1.dpad_right) {lift.hookSet(HookOnOff.HOOK);}
+        if (gamepad1.dpad_left) {lift.hookSet(HookOnOff.DROP);}
+
+        //moving vertical lift manually
+        if (gamepad1.dpad_up) {lift.liftControl(.5,LiftDirection.UP);}
+        if (gamepad1.dpad_down) {lift.liftControl(.5,LiftDirection.DOWN);}
+
+        //Setting robot into hook or drop states using automated code
+        if (gamepad2.y) {
+            lift.liftHookOnOff(HookOnOff.HOOK);
+            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (gamepad2.a) {
+            lift.liftHookOnOff(HookOnOff.DROP);
+            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
+        if (gamepad2.b) {
+            lift.armPos(ArmTopBottom.TOP);
+            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (gamepad2.x) {
+            lift.armPos(ArmTopBottom.BOTTOM);
+            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
     @Override
     public void stop(){
         robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         sweeper.intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
