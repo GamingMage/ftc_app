@@ -4,12 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-
 
 @Autonomous(name="Red: Silver Side", group="Pushbot")
 //@Disabled
-public class RedSilverAuto extends OpMode{
+public class BlueSilverAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
@@ -97,15 +95,15 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.linearDrive(.5,1);
+               robot.linearDrive(.5,1);
                 stateMachineFlow++;
                 break;
             case 7:
-                // Put the team marker in the red depot
+                // Put team marker into blue depot
                 stateMachineFlow++;
                 break;
             case 8:
-               robot.statTurn(.5,180);
+              robot.statTurn(.5,270);
                 stateMachineFlow++;
                 break;
             case 9:
