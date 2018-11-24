@@ -30,6 +30,8 @@ public class LiftSystem
     public DcMotor  liftMotor   = null;
     public DcMotor  armMotor    = null;
 
+    public Servo    hookServo   = null;
+
     DigitalChannel REVTouch;
     public TouchSensor modernTouch;
     /**
@@ -42,12 +44,15 @@ public class LiftSystem
      * The lower (first) pin stays unconnected.*
      */
 
-    public static final int THROW = 2000; //Need to measure
+    public static final int THROW  = 2500; //Need to measure
+    public static final int DUMP   = 2500; //Subject to change
+    public static final int BOTTOM = 0;
+
     public static final int DROP = 1500;  //Need to measure
     public static final int HOOK = 0; //Should be fine since we start here
 
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
+    public static final double HOOK_ON    =  1; //Flip hook up into the bracket
+    public static final double HOOK_OFF  = 0; //Flip hook out
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -80,24 +85,36 @@ public class LiftSystem
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        // Define and initialize ALL installed servos
+        hookServo = hwMap.get(Servo.class, "hook_servo");
+
         // Define and initialize ALL installed sensors
         REVTouch = hwMap.get(DigitalChannel.class, "REV_Touch");
         modernTouch = hwMap.get(TouchSensor.class, "Modern_Touch");
         // set the digital channel to input.
         REVTouch.setMode(DigitalChannel.Mode.INPUT);
     }
-    public void armPos(int pos, double speed){
-        double newPos = (pos/100.0*THROW);
-        int i = (int) (newPos);
+    public void armPos(ArmTopBottom armTopBottom){ //Add raise up lift to get basket clear
+        if (armTopBottom == ArmTopBottom.TOP) {
+            armMotor.setTargetPosition(DUMP);
+            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            armMotor.setPower(.5);
+            while (armMotor.isBusy());
+            armMotor.setPower(0);
+            armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }else if (armTopBottom == ArmTopBottom.BOTTOM) {
+            armMotor.setTargetPosition(BOTTOM);
+            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            armMotor.setPower(.5);
+            while (armMotor.isBusy());
+            armMotor.setPower(0);
+            armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        //double newPos = (pos/100.0*THROW);
+        //int i = (int) (newPos);
         //if (i > THROW){i = THROW;}
         //if (i < 0){i = 0;}
-        armMotor.setTargetPosition(i);
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armMotor.setPower(Math.abs(speed));
-        while (armMotor.isBusy());
-        armMotor.setPower(0);
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        //armMotor.setTargetPosition(i);
     }
     public void liftControl (double power, LiftDirection upOrDown) {
         // if the digital channel returns true it's HIGH and the button is unpressed.
@@ -110,23 +127,45 @@ public class LiftSystem
             }
         }
     }
-    public void liftHookOnOff (double power, HookOnOff hookOnOff) {
+    public void liftHookOnOff (HookOnOff hookOnOff) {
         if (hookOnOff == HookOnOff.HOOK) {
+            liftMotor.setTargetPosition(DROP);
+            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            liftMotor.setPower(.5);
+            while (liftMotor.isBusy() || REVTouch.getState() == true) {}
+            liftMotor.setPower(0);
+            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            hookServo.setPosition(HOOK_ON);
+
             liftMotor.setTargetPosition(HOOK);
             liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(Math.abs(power));
-            while (liftMotor.isBusy()) {}
+            liftMotor.setPower(.5);
+            while (liftMotor.isBusy() || modernTouch.isPressed() == false) {}
             liftMotor.setPower(0);
             liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         else if (hookOnOff == HookOnOff.DROP) {
             liftMotor.setTargetPosition(DROP);
             liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(Math.abs(power));
-            while (liftMotor.isBusy()) {}
+            liftMotor.setPower(.5);
+            while (liftMotor.isBusy() || modernTouch.isPressed() == false) {}
+            liftMotor.setPower(0);
+            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            hookServo.setPosition(HOOK_OFF);
+
+            liftMotor.setTargetPosition(HOOK);
+            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            liftMotor.setPower(.5);
+            while (liftMotor.isBusy() || REVTouch.getState() == true) {}
             liftMotor.setPower(0);
             liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+    }
+    public void hookSet (HookOnOff hookOnOff) {
+        if (hookOnOff == HookOnOff.HOOK) {hookServo.setPosition(HOOK_ON);}
+        else if (hookOnOff == HookOnOff.DROP) {hookServo.setPosition(HOOK_OFF);}
     }
     public void armPower (double power){
         armMotor.setPower(power);
