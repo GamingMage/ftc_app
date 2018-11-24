@@ -1,29 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-/**
- * This is NOT an opmode.
- *
- * This class can be used to define all the specific hardware for a single robot.
- * In this case that robot is a Pushbot.
- * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
- *
- * This hardware class assumes the following device names have been configured on the robot:
- * Note:  All names are lower case and some have single spaces between words.
- *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left claw:  "left_hand"
- * Servo channel:  Servo to open right claw: "right_hand"
- */
 public class LiftSystem
 {
     /* Public OpMode members. */
@@ -94,21 +77,25 @@ public class LiftSystem
         // set the digital channel to input.
         REVTouch.setMode(DigitalChannel.Mode.INPUT);
     }
-    public void armPos(ArmTopBottom armTopBottom){ //Add raise up lift to get basket clear
-        if (armTopBottom == ArmTopBottom.TOP) {
+    public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
+        if (armPosition == ArmPosition.TOP) {
+            liftControl(.5,LiftDirection.UP); //Clear the basket before flipping it
+
             armMotor.setTargetPosition(DUMP);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
             while (armMotor.isBusy());
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }else if (armTopBottom == ArmTopBottom.BOTTOM) {
+        }else if (armPosition == ArmPosition.BOTTOM) {
             armMotor.setTargetPosition(BOTTOM);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
             while (armMotor.isBusy());
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            liftControl(.5,LiftDirection.DOWN); //lower the lift after the box is back down
         }
         //double newPos = (pos/100.0*THROW);
         //int i = (int) (newPos);
@@ -118,54 +105,35 @@ public class LiftSystem
     }
     public void liftControl (double power, LiftDirection upOrDown) {
         // if the digital channel returns true it's HIGH and the button is unpressed.
-        if (upOrDown == LiftDirection.DOWN && REVTouch.getState() == true) {
-            while (REVTouch.getState() == true) {
-                liftMotor.setPower(-power);} //May need to be fixed
-        } else if (upOrDown == LiftDirection.UP && modernTouch.isPressed() == false) {
-            while (modernTouch.isPressed() == false) {
-                liftMotor.setPower(power);
-            }
+        if (upOrDown == LiftDirection.DOWN && REVTouch.getState()) {
+            liftMotor.setPower(-power);//May need to be fixed for direction
+            while (REVTouch.getState()) {}
+            liftMotor.setPower(0);
+        } else if (upOrDown == LiftDirection.UP && !modernTouch.isPressed()) {
+            liftMotor.setPower(power);
+            while (!modernTouch.isPressed()) {}
+            liftMotor.setPower(0);
         }
     }
     public void liftHookOnOff (HookOnOff hookOnOff) {
         if (hookOnOff == HookOnOff.HOOK) {
-            liftMotor.setTargetPosition(DROP);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(.5);
-            while (liftMotor.isBusy() || REVTouch.getState() == true) {}
-            liftMotor.setPower(0);
-            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftControl(.5,LiftDirection.UP); //raise lift into place
 
-            hookServo.setPosition(HOOK_ON);
+            hookSet(HookOnOff.HOOK); //put hook through bracket
 
-            liftMotor.setTargetPosition(HOOK);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(.5);
-            while (liftMotor.isBusy() || modernTouch.isPressed() == false) {}
-            liftMotor.setPower(0);
-            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
         }
         else if (hookOnOff == HookOnOff.DROP) {
-            liftMotor.setTargetPosition(DROP);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(.5);
-            while (liftMotor.isBusy() || modernTouch.isPressed() == false) {}
-            liftMotor.setPower(0);
-            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftControl(.5,LiftDirection.UP); //lower robot off the lander
 
-            hookServo.setPosition(HOOK_OFF);
+            hookSet(HookOnOff.OFF); //remove hook from bracket
 
-            liftMotor.setTargetPosition(HOOK);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftMotor.setPower(.5);
-            while (liftMotor.isBusy() || REVTouch.getState() == true) {}
-            liftMotor.setPower(0);
-            liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftControl(.5,LiftDirection.DOWN); //Lower lift to get it out of the way
         }
     }
     public void hookSet (HookOnOff hookOnOff) {
         if (hookOnOff == HookOnOff.HOOK) {hookServo.setPosition(HOOK_ON);}
-        else if (hookOnOff == HookOnOff.DROP) {hookServo.setPosition(HOOK_OFF);}
+        else if (hookOnOff == HookOnOff.OFF) {hookServo.setPosition(HOOK_OFF);}
     }
     public void armPower (double power){
         armMotor.setPower(power);

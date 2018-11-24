@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public enum ArmTopBottom {
+public enum ArmPosition {
     TOP,
     BOTTOM;
 }
