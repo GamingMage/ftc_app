@@ -37,17 +37,17 @@ public class TeleOpTest extends OpMode {
         if (gamepad1.dpad_down) {lift.liftControl(.5,LiftDirection.DOWN);}
 
         //Setting robot into hook or drop states using automated code
-        if (gamepad2.y) {
+        if (gamepad2.dpad_up) {
             lift.liftHookOnOff(HookOnOff.HOOK);
         }
-        if (gamepad2.a) {
+        if (gamepad2.dpad_down) {
             lift.liftHookOnOff(HookOnOff.DROP);
         }
 
-        if (gamepad2.b) {
+        if (gamepad2.y) {
             lift.armPos(ArmPosition.TOP);
         }
-        if (gamepad2.x) {
+        if (gamepad2.a) {
             lift.armPos(ArmPosition.BOTTOM);
         }
     }

@@ -15,8 +15,8 @@ public class LiftSystem
 
     public Servo    hookServo   = null;
 
-    DigitalChannel REVTouch;
-    public TouchSensor modernTouch;
+    DigitalChannel REVTouchBottom;
+    DigitalChannel REVTouchTop;
     /**
      * The REV Robotics Touch Sensor
      * is treated as a digital channel.  It is HIGH if the button is unpressed.
@@ -72,10 +72,11 @@ public class LiftSystem
         hookServo = hwMap.get(Servo.class, "hook_servo");
 
         // Define and initialize ALL installed sensors
-        REVTouch = hwMap.get(DigitalChannel.class, "REV_Touch");
-        modernTouch = hwMap.get(TouchSensor.class, "Modern_Touch");
+        REVTouchBottom = hwMap.get(DigitalChannel.class, "Bottom_Touch");
+        REVTouchTop = hwMap.get(DigitalChannel.class, "Top_Touch");
         // set the digital channel to input.
-        REVTouch.setMode(DigitalChannel.Mode.INPUT);
+        REVTouchBottom.setMode(DigitalChannel.Mode.INPUT);
+        REVTouchTop.setMode(DigitalChannel.Mode.INPUT);
     }
     public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
         if (armPosition == ArmPosition.TOP) {
@@ -105,13 +106,13 @@ public class LiftSystem
     }
     public void liftControl (double power, LiftDirection upOrDown) {
         // if the digital channel returns true it's HIGH and the button is unpressed.
-        if (upOrDown == LiftDirection.DOWN && REVTouch.getState()) {
+        if (upOrDown == LiftDirection.DOWN && REVTouchBottom.getState()) {
             liftMotor.setPower(-power);//May need to be fixed for direction
-            while (REVTouch.getState()) {}
+            while (REVTouchBottom.getState()) {}
             liftMotor.setPower(0);
-        } else if (upOrDown == LiftDirection.UP && !modernTouch.isPressed()) {
+        } else if (upOrDown == LiftDirection.UP && REVTouchTop.getState()) {
             liftMotor.setPower(power);
-            while (!modernTouch.isPressed()) {}
+            while (REVTouchTop.getState()) {}
             liftMotor.setPower(0);
         }
     }
