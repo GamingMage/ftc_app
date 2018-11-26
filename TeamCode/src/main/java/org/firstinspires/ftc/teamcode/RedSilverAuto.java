@@ -50,7 +50,7 @@ public class RedSilverAuto extends OpMode{
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
 
-        lift.liftHookOnOff(1, HookOnOff.HOOK);
+        lift.liftHookOnOff(HookOnOff.HOOK);
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -77,7 +77,7 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 1:
-                lift.liftHookOnOff(1, HookOnOff.DROP);
+                lift.liftHookOnOff(HookOnOff.DROP);
                 stateMachineFlow++;
                 break;
             case 2:
