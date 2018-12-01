@@ -17,12 +17,6 @@ public class TeleOpTest extends OpMode {
         robot.init(hardwareMap);
         sweeper.init(hardwareMap);
         lift.init(hardwareMap);
-        //the lines below allow the control drive method to work
-        robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        sweeper.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Hello","this is a test");
     }
     @Override
@@ -43,30 +37,23 @@ public class TeleOpTest extends OpMode {
         if (gamepad1.dpad_down) {lift.liftControl(.5,LiftDirection.DOWN);}
 
         //Setting robot into hook or drop states using automated code
-        if (gamepad2.y) {
+        if (gamepad2.dpad_up) {
             lift.liftHookOnOff(HookOnOff.HOOK);
-            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-        if (gamepad2.a) {
+        if (gamepad2.dpad_down) {
             lift.liftHookOnOff(HookOnOff.DROP);
-            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        if (gamepad2.b) {
-            lift.armPos(ArmTopBottom.TOP);
-            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (gamepad2.y) {
+            lift.armPos(ArmPosition.TOP);
         }
-        if (gamepad2.x) {
-            lift.armPos(ArmTopBottom.BOTTOM);
-            lift.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (gamepad2.a) {
+            lift.armPos(ArmPosition.BOTTOM);
         }
     }
     @Override
     public void stop(){
         robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        sweeper.intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
