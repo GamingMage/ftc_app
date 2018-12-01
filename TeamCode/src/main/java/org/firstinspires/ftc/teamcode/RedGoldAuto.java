@@ -76,30 +76,61 @@ public class RedGoldAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
+                // lower robot from lander and lower the arm onto the robot
                 stateMachineFlow++;
                 break;
             case 2:
                 robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 3:
-                // Test color of element
+                robot.pivotTurn(.5,60,RobotDirection.LEFT);
+                // turn left towards the first mineral
                 stateMachineFlow++;
                 break;
             case 4:
-                // Move the gold block away from the silver
+                robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                // Put the team marker in the red depot
+                robot.pivotTurn(.5,90,RobotDirection.RIGHT);
+                // turn right so you can drive by the minerals
                 stateMachineFlow++;
                 break;
             case 6:
-               robot.statTurn(.5,270);
+                robot.linearDrive(.5,1);
+                // move forward and sense the color of the minerals as the robot drives past them
                 stateMachineFlow++;
                 break;
             case 7:
+                // stop when the robot senses the gold block
+                stateMachineFlow++;
+                break;
+            case 8:
+                robot.pivotTurn(.5,60, RobotDirection.LEFT);
+                robot.statTurn(.5,60);
+                // Move the gold block away from the silver
+                stateMachineFlow++;
+                break;
+            case 9:
+               robot.pivotTurn(.5,75,RobotDirection.LEFT);
+                // turn left so you are facing the red depot
+                stateMachineFlow++;
+                break;
+            case 10:
+                // Put the team marker in the red depot
+                stateMachineFlow++;
+                break;
+            case 11:
+               robot.pivotTurn(.5,270,RobotDirection.RIGHT);
+               //robot turns right so it is facing the crater
+                stateMachineFlow++;
+                break;
+            case 12:
                 robot.linearDrive(.5,1);
+                //move forward so you are partially parked in the crater
                 stateMachineFlow++;
                 break;
 

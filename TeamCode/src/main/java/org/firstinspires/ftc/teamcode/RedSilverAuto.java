@@ -78,38 +78,66 @@ public class RedSilverAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
+                // Robot lowers itself from the lander and lowers the arm back onto the robot
                 stateMachineFlow++;
                 break;
             case 2:
                 robot.linearDrive(.5,1);
+                // Move forward a little bit so you can turn near the minerals
                 stateMachineFlow++;
                 break;
             case 3:
-                // Test color of element
+                robot.pivotTurn(.5,45,RobotDirection.RIGHT);
+                //turn right away from lander so you can sense the first block
                 stateMachineFlow++;
                 break;
             case 4:
-                // Move the gold block away from the silver
+                robot.linearDrive(.5,1);
+                //move towards the minerals
                 stateMachineFlow++;
                 break;
             case 5:
                 robot.pivotTurn(.5,90,RobotDirection.LEFT);
+                //turn towards the wall closest to the red depot so you can start moving forward and sensing the minerals
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.linearDrive(.5,1);
+               robot.linearDrive(.5,1);
+                // Test color of element while moving forward
                 stateMachineFlow++;
                 break;
             case 7:
-                // Put the team marker in the red depot
+                // Robot stops when it senses the gold block
                 stateMachineFlow++;
                 break;
             case 8:
-               robot.statTurn(.5,180);
+             robot.pivotTurn(.5,60,RobotDirection.RIGHT);
+             robot.statTurn(.5,-60);
+                // Knocking the gold block away from the tape; negative degrees in the static turn mean turning left
                 stateMachineFlow++;
                 break;
             case 9:
+                robot.pivotTurn(.5,90,RobotDirection.LEFT);
+                //turn towards the red depot
+                stateMachineFlow++;
+                break;
+            case 10:
                 robot.linearDrive(.5,1);
+                // move until you are in front of the red depot
+                stateMachineFlow++;
+                break;
+            case 11:
+                // Put the team marker in the red depot
+                stateMachineFlow++;
+                break;
+            case 12:
+               robot.statTurn(.5,180);
+               // Turn around towards the crater
+                stateMachineFlow++;
+                break;
+            case 13:
+                robot.linearDrive(.5,1);
+                // move forward until you are partially parked in the crater
                 stateMachineFlow++;
                 break;
 
