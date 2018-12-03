@@ -76,30 +76,57 @@ public class BlueGoldAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
+                // lower robot from lander and lower arm onto robot
                 stateMachineFlow++;
                 break;
             case 2:
                 robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 3:
-                // Test color of element
+                robot.pivotTurn(.5,45,RobotDirection.LEFT);
+                // turn left towards the first element
                 stateMachineFlow++;
                 break;
             case 4:
-                // Move the gold block away from the silver
+                robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                // Put the team marker in the blue depot
+                robot.pivotTurn(.5,90,RobotDirection.RIGHT);
+                // turn right so you can start testing the color of the element
                 stateMachineFlow++;
                 break;
             case 6:
-               robot.statTurn(.5,270);
+                robot.linearDrive(.5,1);
+                // move forward and test the color of the element, stop when you sense the gold block
                 stateMachineFlow++;
                 break;
             case 7:
+                robot.pivotTurn(.5,60,RobotDirection.LEFT);
+                robot.statTurn(.5,60);
+                // Move the gold block away from the silver
+                stateMachineFlow++;
+                break;
+            case 8:
+                robot.pivotTurn(.5,160,RobotDirection.LEFT);
+                // turn towards the blue depot
+                stateMachineFlow++;
+                break;
+            case 9:
+                // Put the team marker in the blue depot
+                stateMachineFlow++;
+                break;
+            case 10:
+               robot.statTurn(.5,270);
+               // turn right toward the crater
+                stateMachineFlow++;
+                break;
+            case 11:
                 robot.linearDrive(.5,1);
+                // move forward until you are partially parked in the crater
                 stateMachineFlow++;
                 break;
 
