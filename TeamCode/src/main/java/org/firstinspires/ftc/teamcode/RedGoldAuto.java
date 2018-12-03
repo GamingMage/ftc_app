@@ -4,12 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-
 
 @Autonomous(name="Red: Silver Side", group="Pushbot")
 //@Disabled
-public class RedSilverAuto extends OpMode{
+public class RedGoldAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
@@ -78,66 +76,61 @@ public class RedSilverAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
-                // Robot lowers itself from the lander and lowers the arm back onto the robot
+                // lower robot from lander and lower the arm onto the robot
                 stateMachineFlow++;
                 break;
             case 2:
                 robot.linearDrive(.5,1);
-                // Move forward a little bit so you can turn near the minerals
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.pivotTurn(.5,45,RobotDirection.RIGHT);
-                //turn right away from lander so you can sense the first block
+                robot.pivotTurn(.5,60,RobotDirection.LEFT);
+                // turn left towards the first mineral
                 stateMachineFlow++;
                 break;
             case 4:
                 robot.linearDrive(.5,1);
-                //move towards the minerals
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.pivotTurn(.5,90,RobotDirection.LEFT);
-                //turn towards the wall closest to the red depot so you can start moving forward and sensing the minerals
+                robot.pivotTurn(.5,90,RobotDirection.RIGHT);
+                // turn right so you can drive by the minerals
                 stateMachineFlow++;
                 break;
             case 6:
-               robot.linearDrive(.5,1);
-                // Test color of element while moving forward
+                robot.linearDrive(.5,1);
+                // move forward and sense the color of the minerals as the robot drives past them
                 stateMachineFlow++;
                 break;
             case 7:
-                // Robot stops when it senses the gold block
+                // stop when the robot senses the gold block
                 stateMachineFlow++;
                 break;
             case 8:
-             robot.pivotTurn(.5,60,RobotDirection.RIGHT);
-             robot.statTurn(.5,-60);
-                // Knocking the gold block away from the tape; negative degrees in the static turn mean turning left
+                robot.pivotTurn(.5,60, RobotDirection.LEFT);
+                robot.statTurn(.5,60);
+                // Move the gold block away from the silver
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.pivotTurn(.5,90,RobotDirection.LEFT);
-                //turn towards the red depot
+               robot.pivotTurn(.5,75,RobotDirection.LEFT);
+                // turn left so you are facing the red depot
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.linearDrive(.5,1);
-                // move until you are in front of the red depot
-                stateMachineFlow++;
-                break;
-            case 11:
                 // Put the team marker in the red depot
                 stateMachineFlow++;
                 break;
-            case 12:
-               robot.statTurn(.5,180);
-               // Turn around towards the crater
+            case 11:
+               robot.pivotTurn(.5,270,RobotDirection.RIGHT);
+               //robot turns right so it is facing the crater
                 stateMachineFlow++;
                 break;
-            case 13:
+            case 12:
                 robot.linearDrive(.5,1);
-                // move forward until you are partially parked in the crater
+                //move forward so you are partially parked in the crater
                 stateMachineFlow++;
                 break;
 
