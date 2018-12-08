@@ -85,7 +85,7 @@ public class RedGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.pivotTurn(.5,60,RobotDirection.LEFT);
+                robot.statTurn(.5,-60);
                 // turn left towards the first mineral
                 stateMachineFlow++;
                 break;
@@ -95,7 +95,7 @@ public class RedGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.pivotTurn(.5,90,RobotDirection.RIGHT);
+                robot.statTurn(.5,90);
                 // turn right so you can drive by the minerals
                 stateMachineFlow++;
                 break;
@@ -109,13 +109,13 @@ public class RedGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.pivotTurn(.5,60, RobotDirection.LEFT);
+                robot.statTurn(.5,-60);
                 robot.statTurn(.5,60);
                 // Move the gold block away from the silver
                 stateMachineFlow++;
                 break;
             case 9:
-               robot.pivotTurn(.5,75,RobotDirection.LEFT);
+               robot.statTurn(.5,-75);
                 // turn left so you are facing the red depot
                 stateMachineFlow++;
                 break;
@@ -124,7 +124,7 @@ public class RedGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 11:
-               robot.pivotTurn(.5,270,RobotDirection.RIGHT);
+               robot.statTurn(.5,270);
                //robot turns right so it is facing the crater
                 stateMachineFlow++;
                 break;
