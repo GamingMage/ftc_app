@@ -15,6 +15,7 @@ public class RedSilverAuto extends OpMode{
     RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
+    ColorSens color = new ColorSens();
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -87,7 +88,7 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.statTurn(.5,45);
+                robot.statTurn(.5,90);
                 //turn right away from lander so you can sense the first block
                 stateMachineFlow++;
                 break;
@@ -97,42 +98,62 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.statTurn(.5,90);
+                robot.statTurn(.5,180);
+                robot.linearDrive(.5,1);
                 //turn towards the wall closest to the red depot so you can start moving forward and sensing the minerals
                 stateMachineFlow++;
                 break;
             case 6:
-               robot.linearDrive(.5,1);
-                // Test color of element while moving forward
-                stateMachineFlow++;
+               if (color.rColorSens() == MineralColor.GOLD) {
+                   robot.statTurn(.5,45);
+                   robot.statTurn(.5,-45);
+                   // Knocking the gold block away from the tape
+                   robot.linearDrive(.5,20);
+                   stateMachineFlow = 8;
+               }
+               else if (color.rColorSens() == MineralColor.SILVER) {
+                   robot.linearDrive(.5,10);
+                   stateMachineFlow++;
+               }
                 break;
             case 7:
-                // Robot stops when it senses the gold block
-                stateMachineFlow++;
+                if (color.rColorSens() == MineralColor.GOLD) {
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    robot.linearDrive(.5,10);
+                    stateMachineFlow++;
+                }
+                else if (color.rColorSens() == MineralColor.SILVER) {
+                    robot.linearDrive(.5,10);
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    stateMachineFlow++;
+                }
                 break;
             case 8:
-             robot.statTurn(.5,60);
-             robot.statTurn(.5,-60);
-                // Knocking the gold block away from the tape; negative degrees in the static turn mean turning left
-                stateMachineFlow++;
-                break;
-            case 9:
-                robot.statTurn(.5,-90);
+                robot.linearDrive(.5,10);
+                robot.statTurn(.5,-45);
                 //turn towards the red depot
                 stateMachineFlow++;
                 break;
-            case 10:
+            case 9:
                 robot.linearDrive(.5,1);
                 // move until you are in front of the red depot
                 stateMachineFlow++;
                 break;
-            case 11:
+            case 10:
+                robot.statTurn(.5,180);
                 // Put the team marker in the red depot
                 stateMachineFlow++;
                 break;
+            case 11:
+                lift.armPos(ArmPosition.TOP);
+                stateMachineFlow++;
+                break;
             case 12:
-               robot.statTurn(.5,180);
-               // Turn around towards the crater
+                lift.armPos(ArmPosition.BOTTOM);
                 stateMachineFlow++;
                 break;
             case 13:
