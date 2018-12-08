@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Red: Silver Side", group="Pushbot")
+@Autonomous(name="Blue: Silver Side", group="Pushbot")
 //@Disabled
 public class BlueSilverAuto extends OpMode{
 
