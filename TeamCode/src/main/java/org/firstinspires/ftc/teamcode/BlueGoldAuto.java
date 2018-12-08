@@ -85,7 +85,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.pivotTurn(.5,45,RobotDirection.LEFT);
+                robot.statTurn(.5,-45);
                 // turn left towards the first element
                 stateMachineFlow++;
                 break;
@@ -95,7 +95,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.pivotTurn(.5,90,RobotDirection.RIGHT);
+                robot.statTurn(.5,90);
                 // turn right so you can start testing the color of the element
                 stateMachineFlow++;
                 break;
@@ -105,13 +105,13 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 7:
-                robot.pivotTurn(.5,60,RobotDirection.LEFT);
+                robot.statTurn(.5,-60);
                 robot.statTurn(.5,60);
                 // Move the gold block away from the silver
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.pivotTurn(.5,160,RobotDirection.LEFT);
+                robot.statTurn(.5,-160);
                 // turn towards the blue depot
                 stateMachineFlow++;
                 break;

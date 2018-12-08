@@ -87,7 +87,7 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.pivotTurn(.5,45,RobotDirection.RIGHT);
+                robot.statTurn(.5,45);
                 //turn right away from lander so you can sense the first block
                 stateMachineFlow++;
                 break;
@@ -97,7 +97,7 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.pivotTurn(.5,90,RobotDirection.LEFT);
+                robot.statTurn(.5,90);
                 //turn towards the wall closest to the red depot so you can start moving forward and sensing the minerals
                 stateMachineFlow++;
                 break;
@@ -111,13 +111,13 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-             robot.pivotTurn(.5,60,RobotDirection.RIGHT);
+             robot.statTurn(.5,60);
              robot.statTurn(.5,-60);
                 // Knocking the gold block away from the tape; negative degrees in the static turn mean turning left
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.pivotTurn(.5,90,RobotDirection.LEFT);
+                robot.statTurn(.5,-90);
                 //turn towards the red depot
                 stateMachineFlow++;
                 break;

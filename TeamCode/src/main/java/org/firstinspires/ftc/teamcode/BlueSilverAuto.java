@@ -76,38 +76,66 @@ public class BlueSilverAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
+                // drop the robot from lander and lower arm to robot
                 stateMachineFlow++;
                 break;
             case 2:
                 robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 3:
-                // Test color of element
+                robot.statTurn(.5,60);
+                // turn right
                 stateMachineFlow++;
                 break;
             case 4:
-                // Move the gold block away from the silver
+                robot.linearDrive(.5,1);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.pivotTurn(.5,90,RobotDirection.LEFT);
+                robot.linearDrive(.5,1);
+                // turn left so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
             case 6:
-               robot.linearDrive(.5,1);
+                robot.linearDrive(.5,1);
+                // Test color of element as you move forward
                 stateMachineFlow++;
                 break;
             case 7:
-                // Put team marker into blue depot
+                // stop when the gold block is detected
                 stateMachineFlow++;
                 break;
             case 8:
-              robot.statTurn(.5,270);
+                robot.statTurn(.5,60);
+                robot.statTurn(.5,-60);
+                // Move the gold block away from the silver
                 stateMachineFlow++;
                 break;
             case 9:
+                robot.statTurn(.5,-45);
+                // turn left towards the blue depot
+                stateMachineFlow++;
+                break;
+            case 10:
+               robot.linearDrive(.5,1);
+               // move forward to the blue depot
+                stateMachineFlow++;
+                break;
+            case 11:
+                // Put team marker into blue depot
+                stateMachineFlow++;
+                break;
+            case 12:
+              robot.statTurn(.5,270);
+              //turn around towards the crater
+                stateMachineFlow++;
+                break;
+            case 13:
                 robot.linearDrive(.5,1);
+                //move forward into the crater
                 stateMachineFlow++;
                 break;
 
