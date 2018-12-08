@@ -24,6 +24,9 @@ public class ColorSens {
 
         rightColorSensor = hwMap.get(ColorSensor.class,"right_color");
         leftColorSensor  = hwMap.get(ColorSensor.class,"left_color");
+
+        rColorLED(false);
+        lColorLED(false);
     }
     public void rColorLED(boolean onOff){
         if (onOff == true){rightColorSensor.enableLed(true);

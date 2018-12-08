@@ -81,7 +81,6 @@ public class LiftSystem
     public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
         if (armPosition == ArmPosition.TOP) {
             liftControl(.5,LiftDirection.UP); //Clear the basket before flipping it
-
             armMotor.setTargetPosition(DUMP);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
