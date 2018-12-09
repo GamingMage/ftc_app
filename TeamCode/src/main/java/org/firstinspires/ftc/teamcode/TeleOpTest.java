@@ -11,16 +11,27 @@ public class TeleOpTest extends OpMode {
     RoverDrive    robot   =  new RoverDrive();
     CollectSystem sweeper =  new CollectSystem();
     LiftSystem    lift    =  new LiftSystem();
+    ColorSens     color   =  new ColorSens();
 
     @Override
     public void init() {
         robot.init(hardwareMap);
         sweeper.init(hardwareMap);
         lift.init(hardwareMap);
+        color.init(hardwareMap);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Hello","this is a test");
+        telemetry.update();
     }
     @Override
     public void loop() {
+        telemetry.addData("armPos",lift.getArmPosition());
+        telemetry.addData("Blue",color.lBlueVal());
+        telemetry.addData("TopTouch", lift.REVTouchTop.getState());
+        telemetry.addData("BottomTouch", lift.REVTouchBottom.getState());
+        telemetry.update();
         //manual control of the drive motors
         robot.controlDrive(gamepad1.left_stick_y,gamepad1.right_stick_y);
 
@@ -30,11 +41,11 @@ public class TeleOpTest extends OpMode {
 
         //Setting hook position
         if (gamepad1.dpad_right) {lift.hookSet(HookOnOff.HOOK);}
-        if (gamepad1.dpad_left) {lift.hookSet(HookOnOff.DROP);}
+        if (gamepad1.dpad_left) {lift.hookSet(HookOnOff.OFF);}
 
         //moving vertical lift manually
-        if (gamepad1.dpad_up) {lift.liftControl(.5,LiftDirection.UP);}
-        if (gamepad1.dpad_down) {lift.liftControl(.5,LiftDirection.DOWN);}
+        if (gamepad2.dpad_right) {lift.liftControl(.5,LiftDirection.UP);}
+        if (gamepad2.dpad_left) {lift.liftControl(.5,LiftDirection.DOWN);}
 
         //Setting robot into hook or drop states using automated code
         if (gamepad2.dpad_up) {
@@ -50,10 +61,13 @@ public class TeleOpTest extends OpMode {
         if (gamepad2.a) {
             lift.armPos(ArmPosition.BOTTOM);
         }
+        lift.liftMotor.setPower(gamepad2.left_stick_y);
+        lift.armPower(gamepad2.right_stick_y);
     }
     @Override
     public void stop(){
         robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
