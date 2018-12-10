@@ -66,11 +66,10 @@ public class LiftSystem
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Define and initialize ALL installed servos
         hookServo = hwMap.get(Servo.class, "hook_servo");
-
+        hookServo.setPosition(HOOK_ON);
         // Define and initialize ALL installed sensors
         REVTouchBottom = hwMap.get(DigitalChannel.class, "Bottom_Touch");
         REVTouchTop = hwMap.get(DigitalChannel.class, "Top_Touch");
@@ -81,7 +80,6 @@ public class LiftSystem
     public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
         if (armPosition == ArmPosition.TOP) {
             liftControl(.5,LiftDirection.UP); //Clear the basket before flipping it
-
             armMotor.setTargetPosition(DUMP);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
@@ -108,11 +106,11 @@ public class LiftSystem
         // if the digital channel returns true it's HIGH and the button is unpressed.
         if (upOrDown == LiftDirection.DOWN && REVTouchBottom.getState()) {
             liftMotor.setPower(-power);//May need to be fixed for direction
-            while (REVTouchBottom.getState()) {}
+            while (REVTouchBottom.getState());
             liftMotor.setPower(0);
         } else if (upOrDown == LiftDirection.UP && REVTouchTop.getState()) {
             liftMotor.setPower(power);
-            while (REVTouchTop.getState()) {}
+            while (REVTouchTop.getState());
             liftMotor.setPower(0);
         }
     }

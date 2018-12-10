@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Red: Silver Side", group="Pushbot")
+@Autonomous(name="Blue: Silver Side", group="Pushbot")
 //@Disabled
 public class BlueSilverAuto extends OpMode{
 
@@ -13,6 +13,8 @@ public class BlueSilverAuto extends OpMode{
     RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
+    ColorSens color = new ColorSens();
+
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -48,7 +50,7 @@ public class BlueSilverAuto extends OpMode{
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
 
-        lift.liftHookOnOff(HookOnOff.HOOK);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -75,66 +77,94 @@ public class BlueSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 1:
-                lift.liftHookOnOff(HookOnOff.DROP);
+                //lift.liftHookOnOff(HookOnOff.DROP);
                 // drop the robot from lander and lower arm to robot
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.5,1);
-                // move forward a little bit
+                robot.linearDrive(-.5,5);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.statTurn(.5,60);
-                // turn right
+                robot.statTurn(.5,180);
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.5,1);
+                robot.linearDrive(.5,12);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.linearDrive(.5,1);
-                // turn left so you can start testing the color of the elements
+                robot.statTurn(.5,90);
+                // turn right
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.linearDrive(.5,1);
-                // Test color of element as you move forward
+                robot.linearDrive(.5,14);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 7:
-                // stop when the gold block is detected
+                robot.statTurn(.5,-90);
+                // turn left so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
             case 8:
+                if (color.rColorSens() == MineralColor.GOLD) {
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    robot.linearDrive(.5,20);
+                    stateMachineFlow = 8;
+                }
+                else if (color.rColorSens() == MineralColor.SILVER) {
+                    robot.linearDrive(.5,10);
+                    stateMachineFlow++;
+                }
+                break;
+            case 9:
+                if (color.rColorSens() == MineralColor.GOLD) {
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    robot.linearDrive(.5,10);
+                    stateMachineFlow++;
+                }
+                else if (color.rColorSens() == MineralColor.SILVER) {
+                    robot.linearDrive(.5,10);
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    stateMachineFlow++;
+                }
+                break;
+            case 10:
                 robot.statTurn(.5,60);
                 robot.statTurn(.5,-60);
                 // Move the gold block away from the silver
                 stateMachineFlow++;
                 break;
-            case 9:
+            case 11:
                 robot.statTurn(.5,-45);
                 // turn left towards the blue depot
                 stateMachineFlow++;
                 break;
-            case 10:
-               robot.linearDrive(.5,1);
+            case 12:
+               robot.linearDrive(.5,64);
                // move forward to the blue depot
                 stateMachineFlow++;
                 break;
-            case 11:
+            case 13:
                 // Put team marker into blue depot
                 stateMachineFlow++;
                 break;
-            case 12:
+            case 14:
               robot.statTurn(.5,270);
               //turn around towards the crater
                 stateMachineFlow++;
                 break;
-            case 13:
-                robot.linearDrive(.5,1);
+            case 15:
+                robot.linearDrive(.5,10);
                 //move forward into the crater
                 stateMachineFlow++;
                 break;

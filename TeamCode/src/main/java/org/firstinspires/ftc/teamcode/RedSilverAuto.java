@@ -37,7 +37,9 @@ public class RedSilverAuto extends OpMode{
         lift.init(hardwareMap);
         telemetry.addData("after lift","here");
         telemetry.update();
-
+        color.init(hardwareMap);
+        telemetry.addData("after color","here");
+        telemetry.update();
         sweeper.init(hardwareMap);
         telemetry.addData("after sweeper","here");
         telemetry.update();
@@ -51,7 +53,7 @@ public class RedSilverAuto extends OpMode{
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
 
-        lift.liftHookOnOff(HookOnOff.HOOK);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -78,45 +80,48 @@ public class RedSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 1:
-                lift.liftHookOnOff(HookOnOff.DROP);
+                //lift.liftHookOnOff(HookOnOff.DROP);
                 // Robot lowers itself from the lander and lowers the arm back onto the robot
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.5,1);
+                robot.statTurn(.5,180);
+                // turn robot around
+            case 3:
+                robot.linearDrive(.5,12);
                 // Move forward a little bit so you can turn near the minerals
                 stateMachineFlow++;
                 break;
-            case 3:
+            case 4:
                 robot.statTurn(.5,90);
                 //turn right away from lander so you can sense the first block
                 stateMachineFlow++;
                 break;
-            case 4:
-                robot.linearDrive(.5,1);
+            case 5:
+                robot.linearDrive(.5,14);
                 //move towards the minerals
                 stateMachineFlow++;
                 break;
-            case 5:
+            case 6:
                 robot.statTurn(.5,180);
-                robot.linearDrive(.5,1);
+                robot.linearDrive(.5,3);
                 //turn towards the wall closest to the red depot so you can start moving forward and sensing the minerals
                 stateMachineFlow++;
                 break;
-            case 6:
-               if (color.rColorSens() == MineralColor.GOLD) {
-                   robot.statTurn(.5,45);
-                   robot.statTurn(.5,-45);
-                   // Knocking the gold block away from the tape
-                   robot.linearDrive(.5,20);
-                   stateMachineFlow = 8;
-               }
-               else if (color.rColorSens() == MineralColor.SILVER) {
-                   robot.linearDrive(.5,10);
-                   stateMachineFlow++;
-               }
-                break;
             case 7:
+               if (color.rColorSens() == MineralColor.GOLD) {
+                robot.statTurn(.5,45);
+                robot.statTurn(.5,-45);
+                // Knocking the gold block away from the tape
+                robot.linearDrive(.5,20);
+                stateMachineFlow = 8;
+            }
+            else if (color.rColorSens() == MineralColor.SILVER) {
+                robot.linearDrive(.5,10);
+                stateMachineFlow++;
+            }
+            break;
+            case 8:
                 if (color.rColorSens() == MineralColor.GOLD) {
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
@@ -132,32 +137,32 @@ public class RedSilverAuto extends OpMode{
                     stateMachineFlow++;
                 }
                 break;
-            case 8:
+            case 9:
                 robot.linearDrive(.5,10);
                 robot.statTurn(.5,-45);
                 //turn towards the red depot
                 stateMachineFlow++;
                 break;
-            case 9:
-                robot.linearDrive(.5,1);
+            case 10:
+                robot.linearDrive(.5,64);
                 // move until you are in front of the red depot
                 stateMachineFlow++;
                 break;
-            case 10:
+            case 11:
                 robot.statTurn(.5,180);
                 // Put the team marker in the red depot
                 stateMachineFlow++;
                 break;
-            case 11:
-                lift.armPos(ArmPosition.TOP);
-                stateMachineFlow++;
-                break;
             case 12:
-                lift.armPos(ArmPosition.BOTTOM);
+                //lift.armPos(ArmPosition.TOP);
                 stateMachineFlow++;
                 break;
             case 13:
-                robot.linearDrive(.5,1);
+                //lift.armPos(ArmPosition.BOTTOM);
+                stateMachineFlow++;
+                break;
+            case 14:
+                robot.linearDrive(.5,74);
                 // move forward until you are partially parked in the crater
                 stateMachineFlow++;
                 break;
