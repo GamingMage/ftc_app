@@ -38,13 +38,13 @@ public class ColorSens {
     }
     public MineralColor rColorSens() {
         rightColorSensor.enableLed(true);
-        red   = rightColorSensor.red();
+        /*red   = rightColorSensor.red();
         green = rightColorSensor.green();
-        blue  = rightColorSensor.blue();
-        if (rightColorSensor.blue() > 200) {//white's RGB value has 255 in each category
+        blue  = rightColorSensor.blue();*/
+        if (rightColorSensor.alpha() >= 29) {//white's luminosity is about 29-33 in our practice location
             rightColorSensor.enableLed(false);
             return MineralColor.SILVER;
-        }else if (rightColorSensor.blue() < 50) {//gold's RGB value has a 0 in blue
+        }else if (rightColorSensor.alpha() <= 28 || rightColorSensor.alpha() > 24) {//gold's luminosity value is lower than 28
             rightColorSensor.enableLed(false);
             return MineralColor.GOLD;
         }else {
@@ -54,13 +54,13 @@ public class ColorSens {
     }
     public MineralColor lColorSens() {
         leftColorSensor.enableLed(true);
-        red   = leftColorSensor.red();
+        /*red   = leftColorSensor.red();
         green = leftColorSensor.green();
-        blue  = leftColorSensor.blue();
-        if (leftColorSensor.blue() > 200) {
+        blue  = leftColorSensor.blue();*/
+        if (leftColorSensor.alpha() >= 29) {
             leftColorSensor.enableLed(false);
             return MineralColor.SILVER;
-        }else if (leftColorSensor.blue() < 50) {
+        }else if (leftColorSensor.alpha() <= 28 || leftColorSensor.alpha() > 24) {
             leftColorSensor.enableLed(false);
             return MineralColor.GOLD;
         }else {
@@ -72,8 +72,12 @@ public class ColorSens {
     public int rRedVal () {return rightColorSensor.red();}
     public int rGreenVal () {return rightColorSensor.green();}
     public int rBlueVal () {return rightColorSensor.blue();}
+    public int rLuminosity () {return rightColorSensor.alpha();}
+    public int rCombinedColor () {return rightColorSensor.argb();}
 
     public int lRedVal () {return leftColorSensor.red();}
     public int lGreenVal () {return  leftColorSensor.green();}
     public int lBlueVal () {return leftColorSensor.blue();}
+    public int lLuminosity () {return leftColorSensor.alpha();}
+    public int lCombinedColor () {return leftColorSensor.argb();}
 }
