@@ -49,7 +49,14 @@ public class BlueGoldAuto extends OpMode{
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
 
-        lift.liftHookOnOff(HookOnOff.HOOK);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftControl(.5,LiftDirection.UP); //raise lift into place
+        telemetry.addData("after lift","here")
+        lift.hookSet(HookOnOff.HOOK); //put hook through bracket
+        telemetry.addData("after hook","here");
+        lift.liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
+        telemetry.addData("after lift moves down","here");
+
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
