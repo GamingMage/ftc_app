@@ -90,7 +90,7 @@ public class BlueSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.5,12);
+                robot.linearDrive(.5,10);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
@@ -100,13 +100,13 @@ public class BlueSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.linearDrive(.5,14);
+                robot.linearDrive(.5,20);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 7:
-                robot.statTurn(.5,-90);
-                // turn left so you can start testing the color of the elements
+                robot.statTurn(.5,180);
+                // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
             case 8:
@@ -114,11 +114,11 @@ public class BlueSilverAuto extends OpMode{
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
                     // Knocking the gold block away from the tape
-                    robot.linearDrive(.5,20);
-                    stateMachineFlow = 8;
+                    robot.linearDrive(.5,29);
+                    stateMachineFlow = 10;
                 }
                 else if (color.rColorSens() == MineralColor.SILVER) {
-                    robot.linearDrive(.5,10);
+                    robot.linearDrive(.5,14.5);
                     stateMachineFlow++;
                 }
                 break;
@@ -127,11 +127,11 @@ public class BlueSilverAuto extends OpMode{
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
                     // Knocking the gold block away from the tape
-                    robot.linearDrive(.5,10);
+                    robot.linearDrive(.5,14.5);
                     stateMachineFlow++;
                 }
                 else if (color.rColorSens() == MineralColor.SILVER) {
-                    robot.linearDrive(.5,10);
+                    robot.linearDrive(.5,14.5);
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
                     // Knocking the gold block away from the tape
@@ -139,33 +139,29 @@ public class BlueSilverAuto extends OpMode{
                 }
                 break;
             case 10:
-                robot.statTurn(.5,60);
-                robot.statTurn(.5,-60);
-                // Move the gold block away from the silver
-                stateMachineFlow++;
-                break;
-            case 11:
                 robot.statTurn(.5,-45);
                 // turn left towards the blue depot
                 stateMachineFlow++;
                 break;
-            case 12:
-               robot.linearDrive(.5,64);
+            case 11:
+               robot.linearDrive(.5,60);
                // move forward to the blue depot
                 stateMachineFlow++;
                 break;
-            case 13:
+            case 12:
+                lift.armPos(ArmPosition.TOP);
+                lift.armPos(ArmPosition.BOTTOM);
                 // Put team marker into blue depot
                 stateMachineFlow++;
                 break;
-            case 14:
-              robot.statTurn(.5,270);
+            case 13:
+              robot.statTurn(.5,180);
               //turn around towards the crater
                 stateMachineFlow++;
                 break;
-            case 15:
-                robot.linearDrive(.5,10);
-                //move forward into the crater
+            case 14:
+                robot.linearDrive(.5,75);
+                //move forward so you are partially parked in the crater
                 stateMachineFlow++;
                 break;
 
