@@ -49,7 +49,14 @@ public class BlueGoldAuto extends OpMode{
         //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
 
-        lift.liftHookOnOff(HookOnOff.HOOK);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftControl(.5,LiftDirection.UP); //raise lift into place
+        telemetry.addData("after lift","here")
+        lift.hookSet(HookOnOff.HOOK); //put hook through bracket
+        telemetry.addData("after hook","here");
+        lift.liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
+        telemetry.addData("after lift moves down","here");
+
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -81,21 +88,24 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
+                robot.linearDrive(-.5,5);
+                robot.statTurn(.5,180);
+            case 3:
                 robot.linearDrive(.5,17);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
-            case 3:
+            case 4:
                 robot.statTurn(.5,90);
                 // turn right towards the last element
                 stateMachineFlow++;
                 break;
-            case 4:
+            case 5:
                 robot.linearDrive(.5,14);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
-            case 5:
+            case 6:
                 if (color.rColorSens() == MineralColor.GOLD) {
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
@@ -109,7 +119,7 @@ public class BlueGoldAuto extends OpMode{
                 }
                 break;
                 // move backwards and test the color of the element
-            case 6:
+            case 7:
                 if (color.rColorSens() == MineralColor.GOLD) {
                     robot.statTurn(.5,-45);
                     robot.statTurn(.5,45);
@@ -126,28 +136,33 @@ public class BlueGoldAuto extends OpMode{
                     stateMachineFlow++;
                 }
                 break;
-            case 7:
+            case 8:
                 robot.statTurn(.5,-45);
              // turn towards the blue depot
                 stateMachineFlow++;
                 break;
-            case 8:
+            case 9:
                 robot.linearDrive(.5,20);
                 //move up to the blue depot
                 stateMachineFlow++;
                 break;
-            case 9:
+            case 10:
+                robot.statTurn(.5,180);
+                //turn around
+                stateMachineFlow++;
+                break;
+            case 11:
                 lift.armPos(ArmPosition.TOP);
                 lift.armPos(ArmPosition.BOTTOM);
                 // Put team marker into blue depot
                 stateMachineFlow++;
                 break;
-            case 10:
-               robot.statTurn(.5,90);
-               // turn right toward the crater
+            case 12:
+                robot.statTurn(.5,-90);
+               // turn left toward the crater
                 stateMachineFlow++;
                 break;
-            case 11:
+            case 13:
                 robot.linearDrive(.5,91);
                 // move forward until you are partially parked in the crater
                 stateMachineFlow++;
