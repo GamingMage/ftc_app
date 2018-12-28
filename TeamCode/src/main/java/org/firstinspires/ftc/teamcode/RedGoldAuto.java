@@ -80,60 +80,65 @@ public class RedGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.5,1);
-                // move forward a little bit
+                robot.linearDrive(-.5,5);
+                robot.statTurn(.5,180);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.statTurn(.5,-60);
-                // turn left towards the first mineral
+                robot.linearDrive(.5,58);
+                // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.5,1);
-                // move forward a little bit
+                robot.statTurn(.5,180);
+                // turn around to face out of the depot
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.statTurn(.5,90);
-                // turn right so you can drive by the minerals
+                robot.linearDrive(.5,8);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.linearDrive(.5,1);
-                // move forward and sense the color of the minerals as the robot drives past them
+                lift.armPos(ArmPosition.TOP);
+                // dump the marker in to depot
                 stateMachineFlow++;
                 break;
             case 7:
-                // stop when the robot senses the gold block
+                lift.armPos(ArmPosition.BOTTOM);
+                //lower the arm
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.statTurn(.5,-60);
-                robot.statTurn(.5,60);
-                // Move the gold block away from the silver
+                robot.linearDrive(.5,33);
+                robot.statTurn(.5,-90);
+                // turn towards the crater
                 stateMachineFlow++;
                 break;
             case 9:
-               robot.statTurn(.5,-75);
-                // turn left so you are facing the red depot
+                robot.linearDrive(.5,28);
+                //move towards the crater
                 stateMachineFlow++;
                 break;
             case 10:
-                // Put the team marker in the red depot
-                stateMachineFlow++;
+                robot.statTurn(.5,90);
+                //turn around the side of the lander
                 break;
             case 11:
-               robot.statTurn(.5,270);
-               //robot turns right so it is facing the crater
+                robot.linearDrive(.5,52);
+                // drive towards the other side of the silver side
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.linearDrive(.5,1);
-                //move forward so you are partially parked in the crater
+                robot.statTurn(.5,-90);
+                // turn left toward the crater
                 stateMachineFlow++;
                 break;
-
+            case 13:
+                robot.linearDrive(.5,40);
+                // move forward until you are partially parked in the crater
+                stateMachineFlow++;
+                break;
         }
     }
 }//end of class
