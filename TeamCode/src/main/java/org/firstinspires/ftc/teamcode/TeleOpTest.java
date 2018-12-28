@@ -21,7 +21,7 @@ public class TeleOpTest extends OpMode {
         color.init(hardwareMap);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Hello","this is a test");
         telemetry.update();
     }
