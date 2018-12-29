@@ -55,7 +55,7 @@ public class BlueGoldAuto extends OpMode{
         lift.liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
         telemetry.addData("after lift moves down","here");
         telemetry.update();
-
+        lift.liftMotor.setPower(.1);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
