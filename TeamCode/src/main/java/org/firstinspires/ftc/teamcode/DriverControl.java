@@ -11,7 +11,6 @@ public class DriverControl extends OpMode {
     RoverDrive    robot   =  new RoverDrive();
     CollectSystem sweeper =  new CollectSystem();
     LiftSystem    lift    =  new LiftSystem();
-    ColorSens     color   =  new ColorSens();
 
     int liftToggle = 0;
     int armToggle = 0;
@@ -21,7 +20,6 @@ public class DriverControl extends OpMode {
         robot.init(hardwareMap);
         sweeper.init(hardwareMap);
         lift.init(hardwareMap);
-        color.init(hardwareMap);
 
         msStuckDetectLoop = 8000;
 

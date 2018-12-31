@@ -6,16 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Sensor_Test", group="Pushbot")
-@Disabled
+//@Disabled
 public class SensorTest extends OpMode {
 
     LiftSystem    lift    =  new LiftSystem();
-    ColorSens     color   =  new ColorSens();
 
     @Override
     public void init() {
         lift.init(hardwareMap);
-        color.init(hardwareMap);
         lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Hello","this is a test");
         telemetry.update();
@@ -23,7 +21,6 @@ public class SensorTest extends OpMode {
     @Override
     public void loop() {
         telemetry.addData("armPos",lift.getArmPosition());
-        telemetry.addData("Blue",color.lBlueVal());
         if (lift.REVTouchTop.getState()) {
             telemetry.addData("TopTouch", "Is not Pressed");
         } else {

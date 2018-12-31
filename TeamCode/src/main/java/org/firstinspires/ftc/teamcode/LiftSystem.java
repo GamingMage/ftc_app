@@ -69,7 +69,7 @@ public class LiftSystem
 
         // Define and initialize ALL installed servos
         hookServo = hwMap.get(Servo.class, "hook_servo");
-        hookServo.setPosition(HOOK_ON);
+        hookServo.setPosition(HOOK_OFF);
         // Define and initialize ALL installed sensors
         REVTouchBottom = hwMap.get(DigitalChannel.class, "Bottom_Touch");
         REVTouchTop = hwMap.get(DigitalChannel.class, "Top_Touch");

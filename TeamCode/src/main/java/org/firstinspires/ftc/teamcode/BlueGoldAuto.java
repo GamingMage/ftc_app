@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class BlueGoldAuto extends OpMode{
 
     private int stateMachineFlow;
-    RoverDrive robot       = new RoverDrive();
+    RoverDriveG robot       = new RoverDriveG();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
     ColorSens color = new ColorSens();
@@ -40,22 +40,15 @@ public class BlueGoldAuto extends OpMode{
         telemetry.addData("after sweeper","here");
         telemetry.update();
 
+        msStuckDetectInitLoop = 8000;
+
         telemetry.addData("after init","here");
         telemetry.update();
 
         stateMachineFlow = 0;
 
-        //lift.liftHookOnOff(HookOnOff.HOOK);
-        lift.liftControl(.5,LiftDirection.UP); //raise lift into place
-        telemetry.addData("after lift","here");
-        telemetry.update();
-        lift.hookSet(HookOnOff.HOOK); //put hook through bracket
-        telemetry.addData("after hook","here");
-        telemetry.update();
-        lift.liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
-        telemetry.addData("after lift moves down","here");
-        telemetry.update();
-        lift.liftMotor.setPower(.1);//hold robot on lander
+        lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftMotor.setPower(.15);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -84,19 +77,14 @@ public class BlueGoldAuto extends OpMode{
                 break;
             case 2:
                 robot.linearDrive(.5,5);
-                robot.statTurn(.5,180);
                 stateMachineFlow++;
                 break;
             case 3:
-                sweeper.controlDrive(-.3);
-                robot.linearDrive(.5,-35);
-                sweeper.controlDrive(0);
+                robot.linearDrive(.5,35);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.statTurn(.5,180);
-                // turn around to face out of the depot
                 stateMachineFlow++;
                 break;
             case 5:
@@ -119,7 +107,7 @@ public class BlueGoldAuto extends OpMode{
                 break;*/
                 // move backwards and test the color of the element
                 lift.armPos(ArmPosition.TOP);
-                // dump the marker in to depot
+                // dump the marker into depot
                 stateMachineFlow++;
                 break;
             case 7:
@@ -144,7 +132,7 @@ public class BlueGoldAuto extends OpMode{
                 break;
             case 8:
                 robot.linearDrive(.5,-33);
-                robot.statTurn(.5,-90);
+                robot.gStatTurn(.5,90);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;
@@ -154,7 +142,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.statTurn(.5,90);
+                robot.gStatTurn(.5,-90);
                 //turn around the side of the lander
                 stateMachineFlow++;
                 break;
@@ -164,7 +152,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.statTurn(.5,-90);
+                robot.gStatTurn(.5,-90);
                 // turn left toward the crater
                 stateMachineFlow++;
                 break;
