@@ -28,7 +28,7 @@ public class LiftSystem
      */
 
     public static final int THROW  = 2500; //Need to measure
-    public static final int DUMP   = -700; //Subject to change
+    public static final int DUMP   = -900; //Subject to change
     public static final int BOTTOM = 0;
 
     public static final int DROP = 1500;  //Need to measure
@@ -69,7 +69,7 @@ public class LiftSystem
 
         // Define and initialize ALL installed servos
         hookServo = hwMap.get(Servo.class, "hook_servo");
-        hookServo.setPosition(HOOK_ON);
+        hookServo.setPosition(HOOK_OFF);
         // Define and initialize ALL installed sensors
         REVTouchBottom = hwMap.get(DigitalChannel.class, "Bottom_Touch");
         REVTouchTop = hwMap.get(DigitalChannel.class, "Top_Touch");
@@ -116,17 +116,20 @@ public class LiftSystem
     }
     public void liftHookOnOff (HookOnOff hookOnOff) {
         if (hookOnOff == HookOnOff.HOOK) {
+
             liftControl(.5,LiftDirection.UP); //raise lift into place
 
             hookSet(HookOnOff.HOOK); //put hook through bracket
-
+            double runtime = period.time();
+            while (.6 > period.time() - runtime );
             liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
         }
         else if (hookOnOff == HookOnOff.DROP) {
             liftControl(.5,LiftDirection.UP); //lower robot off the lander
 
             hookSet(HookOnOff.OFF); //remove hook from bracket
-
+            double runtime = period.time();
+            while (.6 > period.time() - runtime );
             liftControl(.5,LiftDirection.DOWN); //Lower lift to get it out of the way
         }
     }
