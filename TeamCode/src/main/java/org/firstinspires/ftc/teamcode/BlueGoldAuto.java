@@ -39,15 +39,16 @@ public class BlueGoldAuto extends OpMode{
         telemetry.addData("after sweeper","here");
         telemetry.update();
 
-        msStuckDetectInitLoop = 8000;
+        msStuckDetectInit = 10000;
 
         telemetry.addData("after init","here");
         telemetry.update();
 
         stateMachineFlow = 0;
-
-        lift.liftHookOnOff(HookOnOff.HOOK);
-        lift.liftMotor.setPower(.15);//hold robot on lander
+        //lift.hookServo.setPosition(lift.HOOK_ON);
+        lift.liftControl(.65,LiftDirection.DOWN);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftMotor.setPower(-.2);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -75,11 +76,11 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.5,5);
+                //robot.linearDrive(.6,5);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.5,35);
+                robot.linearDrive(.35,45);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
@@ -87,7 +88,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.linearDrive(.5,-8);
+                //robot.linearDrive(.6,-8);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
@@ -130,33 +131,33 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.5,-33);
-                robot.gStatTurn(.5,90);
+                robot.linearDrive(.4,-24);
+                robot.gStatTurn(.6,90);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.linearDrive(.5,-28);
+                robot.linearDrive(.4,-15);
                 //move towards the crater
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.gStatTurn(.5,-90);
+                robot.gStatTurn(.6,-90);
                 //turn around the side of the lander
                 stateMachineFlow++;
                 break;
             case 11:
-                robot.linearDrive(.5,-52);
+                robot.linearDrive(.4,-25);
                 // drive towards the other side of the silver side
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.gStatTurn(.5,90);
+                robot.gStatTurn(.6,90);
                 // turn left toward the crater
                 stateMachineFlow++;
                 break;
             case 13:
-                robot.linearDrive(.5,-40);
+                robot.linearDrive(.65,-28);
                 // move forward until you are partially parked in the crater
                 stateMachineFlow++;
                 break;
