@@ -10,10 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class BlueGoldAuto extends OpMode{
 
     private int stateMachineFlow;
-    RoverDriveG robot       = new RoverDriveG();
+    RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
-    ColorSens color = new ColorSens();
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -152,7 +151,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.gStatTurn(.5,-90);
+                robot.gStatTurn(.5,90);
                 // turn left toward the crater
                 stateMachineFlow++;
                 break;

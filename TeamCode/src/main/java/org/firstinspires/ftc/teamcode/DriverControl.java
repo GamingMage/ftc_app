@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class DriverControl extends OpMode {
 
-    RoverDrive    robot   =  new RoverDrive();
+    RoverDrive robot   =  new RoverDrive();
     CollectSystem sweeper =  new CollectSystem();
     LiftSystem    lift    =  new LiftSystem();
 
