@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Drive_Test", group="Pushbot")
-//@Disabled
+@Disabled
 public class TeleOpTest extends OpMode {
 
     RoverDrive robot   =  new RoverDrive();

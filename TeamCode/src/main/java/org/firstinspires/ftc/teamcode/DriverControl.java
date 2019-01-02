@@ -65,7 +65,7 @@ public class DriverControl extends OpMode {
         }
         //code for holding robot in place on lander
         if (gamepad1.dpad_up && liftToggle==1) {
-            lift.liftMotor.setPower(.1);
+            lift.liftMotor.setPower(-.2);
         }
         if (gamepad1.dpad_down && liftToggle==1) {
             lift.liftMotor.setPower(0);
@@ -89,7 +89,9 @@ public class DriverControl extends OpMode {
         if (gamepad2.x && armToggle==0) {armToggle = 1;}
         if (gamepad2.a && armToggle==1) {armToggle = 0;}
 
-        lift.liftMotor.setPower(gamepad2.left_stick_y);
+        if ((gamepad2.left_stick_y <0 || gamepad2.left_stick_y >0) && liftToggle == 0){
+            lift.liftMotor.setPower(-gamepad2.left_stick_y);
+        }
     }
     @Override
     public void stop(){
