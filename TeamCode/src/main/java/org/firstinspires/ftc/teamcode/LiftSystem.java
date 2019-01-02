@@ -28,7 +28,7 @@ public class LiftSystem
      */
 
     public static final int THROW  = 2500; //Need to measure
-    public static final int DUMP   = -900; //Subject to change
+    public static final int DUMP   = 900; //Subject to change
     public static final int BOTTOM = 0;
 
     public static final int DROP = 1500;  //Need to measure
@@ -79,6 +79,7 @@ public class LiftSystem
     }
     public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
         if (armPosition == ArmPosition.TOP) {
+            hookServo.setPosition(HOOK_OFF);
             liftControl(.5,LiftDirection.UP); //Clear the basket before flipping it
             armMotor.setTargetPosition(DUMP);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -87,6 +88,7 @@ public class LiftSystem
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }else if (armPosition == ArmPosition.BOTTOM) {
+            hookServo.setPosition(HOOK_OFF);
             armMotor.setTargetPosition(BOTTOM);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
