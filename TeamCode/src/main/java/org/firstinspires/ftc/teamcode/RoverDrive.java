@@ -20,7 +20,7 @@ public class RoverDrive
     public DcMotor  leftBack    = null;
     public DcMotor  rightBack   = null;
 
-    static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;    // Orbital 20 Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -114,19 +114,6 @@ public class RoverDrive
         rightBack.setPower(Math.abs(speed));
 
         while (leftBack.isBusy() && rightBack.isBusy());
-
-        // keep looping while we are still active, and there is time left, and both motors are running.
-        /* while (opModeIsActive() &&
-        (runtime.seconds() < timeoutS) &&
-                (leftMid.isBusy() && rightMid.isBusy() && leftBack.isBusy() && rightBack.isBusy())) {
-
-            // Display it for the driver.
-            telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-            telemetry.addData("Path2",  "Running at %7d :%7d",
-                    robot.leftDrive.getCurrentPosition(),
-                    robot.rightDrive.getCurrentPosition());
-            telemetry.update();
-        }*/
 
         // Stop all motion;
         leftBack.setPower(0);

@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Blue: Gold Side", group="Pushbot")
+@Autonomous(name="Gold: Far Crater", group="Pushbot")
 //@Disabled
-public class BlueGoldAuto extends OpMode{
+public class GoldFarCraterAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
@@ -80,7 +80,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.35,45);
+                robot.linearDrive(.45,45);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
@@ -131,13 +131,13 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.4,-24);
+                robot.linearDrive(.45,-24.5);
                 robot.gStatTurn(.6,90);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.linearDrive(.4,-15);
+                robot.linearDrive(.45,-28);
                 //move towards the crater
                 stateMachineFlow++;
                 break;
@@ -147,7 +147,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 11:
-                robot.linearDrive(.4,-25);
+                robot.linearDrive(.5,-58);
                 // drive towards the other side of the silver side
                 stateMachineFlow++;
                 break;
@@ -157,7 +157,7 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 13:
-                robot.linearDrive(.65,-28);
+                robot.linearDrive(.65,-32);
                 // move forward until you are partially parked in the crater
                 stateMachineFlow++;
                 break;
