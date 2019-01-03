@@ -5,14 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Red: Gold Side", group="Pushbot")
+@Autonomous(name="Silver: Crater", group="Pushbot")
 //@Disabled
-public class RedGoldAuto extends OpMode{
+public class SilverCraterAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
+    ColorSens color = new ColorSens();
+
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -39,16 +41,16 @@ public class RedGoldAuto extends OpMode{
         telemetry.addData("after sweeper","here");
         telemetry.update();
 
+        msStuckDetectInit = 10000;
+
         telemetry.addData("after init","here");
         telemetry.update();
 
-        //code for gripping glyph and moving arm slightly up
-        //gilgearmesh.clawPos(1);
-        //wait needed? Also... guessed parameters
-        //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
-
-        lift.liftHookOnOff(HookOnOff.HOOK);
+        //lift.hookServo.setPosition(lift.HOOK_ON);
+        lift.liftControl(.65,LiftDirection.DOWN);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftMotor.setPower(-.2);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
@@ -76,67 +78,51 @@ public class RedGoldAuto extends OpMode{
                 break;
             case 1:
                 lift.liftHookOnOff(HookOnOff.DROP);
-                // lower robot from lander and lower the arm onto the robot
+                // drop the robot from lander and lower arm to robot
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(-.5,5);
-                robot.statTurn(.5,180);
+                robot.linearDrive(.45,23);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.5,58);
-                // move forward through the middle element and into the depot
+                robot.linearDrive(.45,-11);
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.statTurn(.5,180);
-                // turn around to face out of the depot
+                robot.gStatTurn(.6,-90);
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.linearDrive(.5,8);
-                // move forward a little bit
+                robot.linearDrive(.45,-29);
+                // turn right
                 stateMachineFlow++;
                 break;
             case 6:
-                lift.armPos(ArmPosition.TOP);
-                // dump the marker in to depot
+                robot.gStatTurn(.6,-45);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 7:
-                lift.armPos(ArmPosition.BOTTOM);
-                //lower the arm
+                robot.linearDrive(.45,-72);
+                // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.5,33);
-                robot.statTurn(.5,-90);
-                // turn towards the crater
+                robot.gStatTurn(.6,-180);
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.linearDrive(.5,28);
-                //move towards the crater
+                lift.armPos(ArmPosition.TOP);
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.statTurn(.5,90);
-                //turn around the side of the lander
+                lift.armPos(ArmPosition.BOTTOM);
+                stateMachineFlow++;
                 break;
             case 11:
-                robot.linearDrive(.5,52);
-                // drive towards the other side of the silver side
-                stateMachineFlow++;
-                break;
-            case 12:
-                robot.statTurn(.5,-90);
-                // turn left toward the crater
-                stateMachineFlow++;
-                break;
-            case 13:
-                robot.linearDrive(.5,40);
-                // move forward until you are partially parked in the crater
+               robot.linearDrive(.65,-75);
+               // move forward to the blue depot
                 stateMachineFlow++;
                 break;
         }

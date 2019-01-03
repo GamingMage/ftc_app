@@ -47,8 +47,16 @@ public class DriverControl extends OpMode {
         if (gamepad1.dpad_right) {lift.hookSet(HookOnOff.OFF);}
 
         //moving vertical lift manually
-        if (gamepad2.dpad_up) {lift.liftControl(.5,LiftDirection.UP);}
-        if (gamepad2.dpad_down) {lift.liftControl(.5,LiftDirection.DOWN);}
+        if (gamepad2.dpad_up) {
+            robot.rightBack.setPower(0);
+            robot.leftBack.setPower(0);
+            lift.liftControl(.65,LiftDirection.UP);
+        }
+        if (gamepad2.dpad_down) {
+            robot.rightBack.setPower(0);
+            robot.leftBack.setPower(0);
+            lift.liftControl(.65,LiftDirection.DOWN);
+        }
 
         //Setting robot into hooked or dropped states using automated code
         if (gamepad1.y && liftToggle==0) {

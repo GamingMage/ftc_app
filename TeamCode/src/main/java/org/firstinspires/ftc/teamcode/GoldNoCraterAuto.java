@@ -5,16 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Blue: Silver Side", group="Pushbot")
+@Autonomous(name="Gold: No Crater", group="Pushbot")
 //@Disabled
-public class BlueSilverAuto extends OpMode{
+public class GoldNoCraterAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
-    ColorSens color = new ColorSens();
-
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -41,29 +39,25 @@ public class BlueSilverAuto extends OpMode{
         telemetry.addData("after sweeper","here");
         telemetry.update();
 
+        msStuckDetectInit = 10000;
+
         telemetry.addData("after init","here");
         telemetry.update();
 
-        //code for gripping glyph and moving arm slightly up
-        //gilgearmesh.clawPos(1);
-        //wait needed? Also... guessed parameters
-        //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
-
+        //lift.hookServo.setPosition(lift.HOOK_ON);
+        lift.liftControl(.65,LiftDirection.DOWN);
         //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftMotor.setPower(-.2);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
     }
 
-    /*@Override
+    @Override
     public void init_loop(){
 
-
-        telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
-        telemetry.addData("Color",jewelColor);
-        telemetry.addData("Case",stateMachineFlow);
-        telemetry.update();}*/
+    }
 
     @Override
     public void loop() {
@@ -77,94 +71,70 @@ public class BlueSilverAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 1:
-                //lift.liftHookOnOff(HookOnOff.DROP);
-                // drop the robot from lander and lower arm to robot
+                lift.liftHookOnOff(HookOnOff.DROP);
+                // lower robot from lander and lower arm onto robot
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(-.5,5);
+                //robot.linearDrive(.6,5);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.statTurn(.5,180);
+                robot.linearDrive(.45,45);
+                // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.5,10);
-                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.statTurn(.5,90);
-                // turn right
-                stateMachineFlow++;
-                break;
-            case 6:
-                robot.linearDrive(.5,20);
+                //robot.linearDrive(.6,-8);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
+            case 6:
+                /*if (color.rColorSens() == MineralColor.GOLD) {
+                    robot.statTurn(.5,45);
+                    robot.statTurn(.5,-45);
+                    // Knocking the gold block away from the tape
+                    robot.linearDrive(-.5,34);
+                    stateMachineFlow = 7;
+                }
+                else if (color.rColorSens() == MineralColor.SILVER) {
+                    robot.linearDrive(-.5,14.5);
+                    stateMachineFlow++;
+                }
+                break;*/
+                // move backwards and test the color of the element
+                lift.armPos(ArmPosition.TOP);
+                // dump the marker into depot
+                stateMachineFlow++;
+                break;
             case 7:
-                robot.statTurn(.5,180);
-                // turn so you can start testing the color of the elements
+                /*if (color.rColorSens() == MineralColor.GOLD) {
+                    robot.statTurn(.5,-45);
+                    robot.statTurn(.5,45);
+                    // Knocking the gold block away from the tape
+                    robot.linearDrive(-.5,19.5);
+                    stateMachineFlow++;
+                }
+                else if (color.rColorSens() == MineralColor.SILVER) {
+                    robot.linearDrive(-.5,14.5);
+                    robot.statTurn(.5,-45);
+                    robot.statTurn(.5,45);
+                    robot.linearDrive(-.5,5);
+                    // Knocking the gold block away from the tape
+                    stateMachineFlow++;
+                }*/
+                lift.armPos(ArmPosition.BOTTOM);
+                //lower the arm
                 stateMachineFlow++;
                 break;
             case 8:
-                if (color.rColorSens() == MineralColor.GOLD) {
-                    robot.statTurn(.5,45);
-                    robot.statTurn(.5,-45);
-                    // Knocking the gold block away from the tape
-                    robot.linearDrive(.5,29);
-                    stateMachineFlow = 10;
-                }
-                else if (color.rColorSens() == MineralColor.SILVER) {
-                    robot.linearDrive(.5,14.5);
-                    stateMachineFlow++;
-                }
-                break;
-            case 9:
-                if (color.rColorSens() == MineralColor.GOLD) {
-                    robot.statTurn(.5,45);
-                    robot.statTurn(.5,-45);
-                    // Knocking the gold block away from the tape
-                    robot.linearDrive(.5,14.5);
-                    stateMachineFlow++;
-                }
-                else if (color.rColorSens() == MineralColor.SILVER) {
-                    robot.linearDrive(.5,14.5);
-                    robot.statTurn(.5,45);
-                    robot.statTurn(.5,-45);
-                    // Knocking the gold block away from the tape
-                    stateMachineFlow++;
-                }
-                break;
-            case 10:
-                robot.statTurn(.5,-45);
-                // turn left towards the blue depot
+                robot.linearDrive(.45,-40);
+                // turn towards the crater
                 stateMachineFlow++;
                 break;
-            case 11:
-               robot.linearDrive(.5,60);
-               // move forward to the blue depot
-                stateMachineFlow++;
-                break;
-            case 12:
-                lift.armPos(ArmPosition.TOP);
-                lift.armPos(ArmPosition.BOTTOM);
-                // Put team marker into blue depot
-                stateMachineFlow++;
-                break;
-            case 13:
-              robot.statTurn(.5,180);
-              //turn around towards the crater
-                stateMachineFlow++;
-                break;
-            case 14:
-                robot.linearDrive(.5,75);
-                //move forward so you are partially parked in the crater
-                stateMachineFlow++;
-                break;
-
         }
     }
 }//end of class
