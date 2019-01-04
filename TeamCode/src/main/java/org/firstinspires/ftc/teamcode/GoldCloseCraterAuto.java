@@ -17,13 +17,6 @@ public class GoldCloseCraterAuto extends OpMode{
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
 
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
-
     @Override
     public void init() {
         telemetry.addData("before init","here");
@@ -137,8 +130,16 @@ public class GoldCloseCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.linearDrive(.65,-58);
+                robot.linearDrive(.55,-33);
                 //move towards the crater
+                stateMachineFlow++;
+                break;
+            case 10:
+                robot.gStatTurn(.6,-29);
+                stateMachineFlow++;
+                break;
+            case 11:
+                robot.linearDrive(.65,-18);
                 stateMachineFlow++;
                 break;
         }
