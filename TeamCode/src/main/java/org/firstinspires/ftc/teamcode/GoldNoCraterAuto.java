@@ -17,13 +17,6 @@ public class GoldNoCraterAuto extends OpMode{
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
 
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
-
     @Override
     public void init() {
         telemetry.addData("before init","here");

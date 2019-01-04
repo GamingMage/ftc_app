@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Silver: No Crater", group="Pushbot")
+@Autonomous(name="Silver: Depot", group="Pushbot")
 //@Disabled
-public class SilverNoCraterAuto extends OpMode{
+public class SilverDepotAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
@@ -18,13 +18,6 @@ public class SilverNoCraterAuto extends OpMode{
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
-
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
 
     @Override
     public void init() {
@@ -82,11 +75,43 @@ public class SilverNoCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.45,23);
+                robot.linearDrive(.45,27);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.45,-23);
+                robot.linearDrive(.45,-7);
+                stateMachineFlow++;
+                break;
+            case 4:
+                robot.gStatTurn(.6,90);
+                stateMachineFlow++;
+                break;
+            case 5:
+                robot.linearDrive(.45,55);
+                // turn right
+                stateMachineFlow++;
+                break;
+            case 6:
+                robot.gStatTurn(.6,43);
+                // move forward a little bit
+                stateMachineFlow++;
+                break;
+            case 7:
+                robot.linearDrive(.45,25);
+                // turn so you can start testing the color of the elements
+                stateMachineFlow++;
+                break;
+            case 8:
+                lift.armPos(ArmPosition.TOP);
+                stateMachineFlow++;
+                break;
+            case 9:
+                lift.armPos(ArmPosition.BOTTOM);
+                stateMachineFlow++;
+                break;
+            case 10:
+               robot.linearDrive(.65,-68);
+               // move forward to the blue depot
                 stateMachineFlow++;
                 break;
         }

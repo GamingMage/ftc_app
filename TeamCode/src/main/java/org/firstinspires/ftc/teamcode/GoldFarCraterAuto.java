@@ -17,13 +17,6 @@ public class GoldFarCraterAuto extends OpMode{
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
 
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
-
     @Override
     public void init() {
         telemetry.addData("before init","here");
@@ -132,7 +125,7 @@ public class GoldFarCraterAuto extends OpMode{
                 break;
             case 8:
                 robot.linearDrive(.45,-24.5);
-                robot.gStatTurn(.6,90);
+                robot.gStatTurn(.6,89);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;
@@ -142,17 +135,17 @@ public class GoldFarCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.gStatTurn(.6,-90);
+                robot.gStatTurn(.6,-91);
                 //turn around the side of the lander
                 stateMachineFlow++;
                 break;
             case 11:
-                robot.linearDrive(.5,-58);
+                robot.linearDrive(.5,-78);
                 // drive towards the other side of the silver side
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.gStatTurn(.6,90);
+                robot.gStatTurn(.6,130);
                 // turn left toward the crater
                 stateMachineFlow++;
                 break;
