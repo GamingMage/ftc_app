@@ -92,7 +92,7 @@ public class SilverDepotAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 6:
-                robot.gStatTurn(.6,43);
+                robot.gStatTurn(.6,37);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
