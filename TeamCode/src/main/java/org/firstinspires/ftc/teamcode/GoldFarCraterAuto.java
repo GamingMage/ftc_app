@@ -135,7 +135,7 @@ public class GoldFarCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 10:
-                robot.gStatTurn(.6,-91);
+                robot.gStatTurn(.6,-89);
                 //turn around the side of the lander
                 stateMachineFlow++;
                 break;

@@ -17,6 +17,7 @@ public class EncoderTest extends OpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     RoverDrive robot = new RoverDrive();
+    LiftSystem lift = new LiftSystem();
 
     @Override
     public void init() {
@@ -27,6 +28,11 @@ public class EncoderTest extends OpMode {
         robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        lift.init(hardwareMap);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        lift.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         telemetry.addData("Hello","this is a test");
         telemetry.update();
     }
@@ -34,6 +40,7 @@ public class EncoderTest extends OpMode {
     public void loop() {
         telemetry.addData("LB",robot.getLBencoder());
         telemetry.addData("RB",robot.getRBencoder());
+        telemetry.addData("Arm",lift.getArmPosition());
         telemetry.update();
         if (gamepad1.a) {
             int newLBTarget;
@@ -58,6 +65,24 @@ public class EncoderTest extends OpMode {
             // Stop all motion;
             robot.leftBack.setPower(0);
             robot.rightBack.setPower(0);
+        }
+        if (gamepad1.b) {
+            int newArmTarget;
+
+            // Determine new target position, and pass to motor controller
+            newArmTarget = lift.armMotor.getCurrentPosition() + (int) (45 * COUNTS_PER_INCH);
+            lift.armMotor.setTargetPosition(850);
+
+            // Turn On RUN_TO_POSITION
+            lift.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // start motion.
+            lift.armMotor.setPower(Math.abs(.35));
+
+            while (lift.armMotor.isBusy());
+
+            // Stop all motion;
+            lift.armMotor.setPower(0);
         }
     }
 }
