@@ -1,34 +1,32 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Drive_Test", group="Pushbot")
-
+@Disabled
 public class TeleOpTest extends OpMode {
 
-    RoverDrive    robot   =  new RoverDrive();
+    RoverDrive robot   =  new RoverDrive();
     CollectSystem sweeper =  new CollectSystem();
     LiftSystem    lift    =  new LiftSystem();
-    ColorSens     color   =  new ColorSens();
 
     @Override
     public void init() {
         robot.init(hardwareMap);
         sweeper.init(hardwareMap);
         lift.init(hardwareMap);
-        color.init(hardwareMap);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Hello","this is a test");
         telemetry.update();
     }
     @Override
     public void loop() {
         telemetry.addData("armPos",lift.getArmPosition());
-        telemetry.addData("Blue",color.lBlueVal());
         telemetry.addData("TopTouch", lift.REVTouchTop.getState());
         telemetry.addData("BottomTouch", lift.REVTouchBottom.getState());
         telemetry.update();

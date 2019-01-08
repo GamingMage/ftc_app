@@ -28,7 +28,7 @@ public class LiftSystem
      */
 
     public static final int THROW  = 2500; //Need to measure
-    public static final int DUMP   = 2500; //Subject to change
+    public static final int DUMP   = 850; //Subject to change
     public static final int BOTTOM = 0;
 
     public static final int DROP = 1500;  //Need to measure
@@ -69,7 +69,7 @@ public class LiftSystem
 
         // Define and initialize ALL installed servos
         hookServo = hwMap.get(Servo.class, "hook_servo");
-        hookServo.setPosition(HOOK_ON);
+        //hookServo.setPosition(HOOK_OFF);
         // Define and initialize ALL installed sensors
         REVTouchBottom = hwMap.get(DigitalChannel.class, "Bottom_Touch");
         REVTouchTop = hwMap.get(DigitalChannel.class, "Top_Touch");
@@ -79,7 +79,8 @@ public class LiftSystem
     }
     public void armPos(ArmPosition armPosition){ //Add raise up lift to get basket clear
         if (armPosition == ArmPosition.TOP) {
-            liftControl(.5,LiftDirection.UP); //Clear the basket before flipping it
+            hookServo.setPosition(HOOK_OFF);
+            liftControl(.65,LiftDirection.UP); //Clear the basket before flipping it
             armMotor.setTargetPosition(DUMP);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             armMotor.setPower(.5);
@@ -87,20 +88,16 @@ public class LiftSystem
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }else if (armPosition == ArmPosition.BOTTOM) {
+            hookServo.setPosition(HOOK_OFF);
             armMotor.setTargetPosition(BOTTOM);
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(.5);
+            armMotor.setPower(.65);
             while (armMotor.isBusy());
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             liftControl(.5,LiftDirection.DOWN); //lower the lift after the box is back down
         }
-        //double newPos = (pos/100.0*THROW);
-        //int i = (int) (newPos);
-        //if (i > THROW){i = THROW;}
-        //if (i < 0){i = 0;}
-        //armMotor.setTargetPosition(i);
     }
     public void liftControl (double power, LiftDirection upOrDown) {
         // if the digital channel returns true it's HIGH and the button is unpressed.
@@ -116,18 +113,21 @@ public class LiftSystem
     }
     public void liftHookOnOff (HookOnOff hookOnOff) {
         if (hookOnOff == HookOnOff.HOOK) {
-            liftControl(.5,LiftDirection.UP); //raise lift into place
+
+            liftControl(.65,LiftDirection.UP); //raise lift into place
 
             hookSet(HookOnOff.HOOK); //put hook through bracket
-
-            liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
+            double runtime = period.time();
+            while (.6 > period.time() - runtime );
+            liftControl(.65,LiftDirection.DOWN); //lower lift to raise robot
         }
         else if (hookOnOff == HookOnOff.DROP) {
-            liftControl(.5,LiftDirection.UP); //lower robot off the lander
+            liftControl(.65,LiftDirection.UP); //lower robot off the lander
 
             hookSet(HookOnOff.OFF); //remove hook from bracket
-
-            liftControl(.5,LiftDirection.DOWN); //Lower lift to get it out of the way
+            double runtime = period.time();
+            while (.6 > period.time() - runtime );
+            liftControl(.65,LiftDirection.DOWN); //Lower lift to get it out of the way
         }
     }
     public void hookSet (HookOnOff hookOnOff) {

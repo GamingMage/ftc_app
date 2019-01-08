@@ -4,29 +4,20 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
-
-@Autonomous(name="Jewel Park: Blue Corner", group="Pushbot")
+@Autonomous(name="Silver: Depot", group="Pushbot")
 //@Disabled
-public class BlueCornerJewelPark extends OpMode{
+public class SilverDepotAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
-    private ElapsedTime     runtime = new ElapsedTime();
+    CollectSystem sweeper = new CollectSystem();
+    LiftSystem lift = new LiftSystem();
+    ColorSens color = new ColorSens();
 
-    RelicRecoveryVuMark glyph;
-    LiftSystem gilgearmesh = new LiftSystem();
 
     double time;
-
-
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
+    private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
     public void init() {
@@ -35,22 +26,25 @@ public class BlueCornerJewelPark extends OpMode{
         robot.init(hardwareMap);
         telemetry.addData("after robot","here");
         telemetry.update();
-        gilgearmesh.init(hardwareMap);
-        telemetry.addData("after gilgearmesh","here");
+        lift.init(hardwareMap);
+        telemetry.addData("after lift","here");
         telemetry.update();
+
+        sweeper.init(hardwareMap);
+        telemetry.addData("after sweeper","here");
+        telemetry.update();
+
+        msStuckDetectInit = 10000;
 
         telemetry.addData("after init","here");
         telemetry.update();
 
-        //code for gripping glyph and moving arm slightly up
-        //gilgearmesh.clawPos(1);
-        //wait needed? Also... guessed parameters
-        //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
-
-        //telemetry.addData("Key",glyph);
-        telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
-        //telemetry.addData("Color",jewelColor);
+        //lift.hookServo.setPosition(lift.HOOK_ON);
+        lift.liftControl(.65,LiftDirection.DOWN);
+        //lift.liftHookOnOff(HookOnOff.HOOK);
+        lift.liftMotor.setPower(-.2);//hold robot on lander
+        telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
     }
@@ -69,45 +63,56 @@ public class BlueCornerJewelPark extends OpMode{
         switch(stateMachineFlow){
             case 0:
                 runtime.reset();
-                telemetry.addData("Arm",gilgearmesh.getArmPosition());
-                //telemetry.addData("Color",jewelColor);
+
                 telemetry.addData("Case",stateMachineFlow);
                 telemetry.update();
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 1:
-
+                lift.liftHookOnOff(HookOnOff.DROP);
+                // drop the robot from lander and lower arm to robot
                 stateMachineFlow++;
                 break;
             case 2:
-
+                robot.linearDrive(.45,27);
                 stateMachineFlow++;
                 break;
             case 3:
-
+                robot.linearDrive(.45,-7);
                 stateMachineFlow++;
                 break;
             case 4:
-
+                robot.gStatTurn(.6,90);
                 stateMachineFlow++;
                 break;
             case 5:
-
+                robot.linearDrive(.45,55);
+                // turn right
                 stateMachineFlow++;
                 break;
             case 6:
-
+                robot.gStatTurn(.6,37);
+                // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 7:
-
+                robot.linearDrive(.45,25);
+                // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
             case 8:
-
+                lift.armPos(ArmPosition.TOP);
                 stateMachineFlow++;
-                //end?
+                break;
+            case 9:
+                lift.armPos(ArmPosition.BOTTOM);
+                stateMachineFlow++;
+                break;
+            case 10:
+               robot.linearDrive(.65,-68);
+               // move forward to the blue depot
+                stateMachineFlow++;
                 break;
         }
     }

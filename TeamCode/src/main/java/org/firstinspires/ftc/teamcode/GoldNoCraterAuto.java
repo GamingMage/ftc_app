@@ -5,25 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Blue: Gold Side", group="Pushbot")
+@Autonomous(name="Gold: No Crater", group="Pushbot")
 //@Disabled
-public class BlueGoldAuto extends OpMode{
+public class GoldNoCraterAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
     CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
-    ColorSens color = new ColorSens();
 
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
-
-    //VuforiaLocalizer vuforia;
-    /*int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-    VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-    VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    VuforiaTrackable relicTemplate = relicTrackables.get(0);
-*/
 
     @Override
     public void init() {
@@ -40,36 +32,25 @@ public class BlueGoldAuto extends OpMode{
         telemetry.addData("after sweeper","here");
         telemetry.update();
 
+        msStuckDetectInit = 10000;
+
         telemetry.addData("after init","here");
         telemetry.update();
 
-        //code for gripping glyph and moving arm slightly up
-        //gilgearmesh.clawPos(1);
-        //wait needed? Also... guessed parameters
-        //gilgearmesh.armPos(800,.6);
         stateMachineFlow = 0;
-
+        //lift.hookServo.setPosition(lift.HOOK_ON);
+        lift.liftControl(.65,LiftDirection.DOWN);
         //lift.liftHookOnOff(HookOnOff.HOOK);
-        lift.liftControl(.5,LiftDirection.UP); //raise lift into place
-        telemetry.addData("after lift","here")
-        lift.hookSet(HookOnOff.HOOK); //put hook through bracket
-        telemetry.addData("after hook","here");
-        lift.liftControl(.5,LiftDirection.DOWN); //lower lift to raise robot
-        telemetry.addData("after lift moves down","here");
-
+        lift.liftMotor.setPower(-.2);//hold robot on lander
         telemetry.addData("after hook on to lander", 0);
         telemetry.addData("Case",stateMachineFlow);
         telemetry.update();
     }
 
-    /*@Override
+    @Override
     public void init_loop(){
 
-
-        telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
-        telemetry.addData("Color",jewelColor);
-        telemetry.addData("Case",stateMachineFlow);
-        telemetry.update();}*/
+    }
 
     @Override
     public void loop() {
@@ -88,25 +69,24 @@ public class BlueGoldAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(-.5,5);
-                robot.statTurn(.5,180);
+                //robot.linearDrive(.6,5);
+                stateMachineFlow++;
+                break;
             case 3:
-                robot.linearDrive(.5,17);
-                // move forward a little bit
+                robot.linearDrive(.45,45);
+                // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.statTurn(.5,90);
-                // turn right towards the last element
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.linearDrive(.5,14);
+                //robot.linearDrive(.6,-8);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 6:
-                if (color.rColorSens() == MineralColor.GOLD) {
+                /*if (color.rColorSens() == MineralColor.GOLD) {
                     robot.statTurn(.5,45);
                     robot.statTurn(.5,-45);
                     // Knocking the gold block away from the tape
@@ -117,10 +97,14 @@ public class BlueGoldAuto extends OpMode{
                     robot.linearDrive(-.5,14.5);
                     stateMachineFlow++;
                 }
-                break;
+                break;*/
                 // move backwards and test the color of the element
+                lift.armPos(ArmPosition.TOP);
+                // dump the marker into depot
+                stateMachineFlow++;
+                break;
             case 7:
-                if (color.rColorSens() == MineralColor.GOLD) {
+                /*if (color.rColorSens() == MineralColor.GOLD) {
                     robot.statTurn(.5,-45);
                     robot.statTurn(.5,45);
                     // Knocking the gold block away from the tape
@@ -134,40 +118,16 @@ public class BlueGoldAuto extends OpMode{
                     robot.linearDrive(-.5,5);
                     // Knocking the gold block away from the tape
                     stateMachineFlow++;
-                }
+                }*/
+                lift.armPos(ArmPosition.BOTTOM);
+                //lower the arm
+                stateMachineFlow++;
                 break;
             case 8:
-                robot.statTurn(.5,-45);
-             // turn towards the blue depot
+                robot.linearDrive(.45,-40);
+                // turn towards the crater
                 stateMachineFlow++;
                 break;
-            case 9:
-                robot.linearDrive(.5,20);
-                //move up to the blue depot
-                stateMachineFlow++;
-                break;
-            case 10:
-                robot.statTurn(.5,180);
-                //turn around
-                stateMachineFlow++;
-                break;
-            case 11:
-                lift.armPos(ArmPosition.TOP);
-                lift.armPos(ArmPosition.BOTTOM);
-                // Put team marker into blue depot
-                stateMachineFlow++;
-                break;
-            case 12:
-                robot.statTurn(.5,-90);
-               // turn left toward the crater
-                stateMachineFlow++;
-                break;
-            case 13:
-                robot.linearDrive(.5,91);
-                // move forward until you are partially parked in the crater
-                stateMachineFlow++;
-                break;
-
         }
     }
 }//end of class
