@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Gold: Close Crater", group="Pushbot")
 //@Disabled
-public class GoldCloseCraterAutoV extends OpMode{
+public class GoldNoCraterAutoV extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot      = new RoverDrive();
@@ -124,11 +124,13 @@ public class GoldCloseCraterAutoV extends OpMode{
                     robot.linearDrive(.45,-8);
                 }else if (goldPos == MineralPosition.CENTER){
                     robot.linearDrive(.45,-24.5);
-                    stateMachineFlow = 15;
+                    stateMachineFlow = 13;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
                     robot.linearDrive(.45,-8);
                 }
+                robot.gStatTurn(.6,90);
+                // turn towards the crater
                 stateMachineFlow++;
                 break;
             case 11:
@@ -153,29 +155,6 @@ public class GoldCloseCraterAutoV extends OpMode{
                 }else if (goldPos == MineralPosition.RIGHT){
                     robot.gStatTurn(.6,-40);
                 }
-                stateMachineFlow++;
-                break;
-            case 14:
-                if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,14.5);
-                }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,14.5);
-                }
-                stateMachineFlow++;
-                break;
-            case 15:
-                robot.gStatTurn(.6,90);
-            case 16:
-                robot.linearDrive(.55,-33);
-                //move towards the crater
-                stateMachineFlow++;
-                break;
-            case 17:
-                robot.gStatTurn(.6,-29);
-                stateMachineFlow++;
-                break;
-            case 18:
-                robot.linearDrive(.65,-18);
                 stateMachineFlow++;
                 break;
         }
