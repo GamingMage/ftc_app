@@ -28,7 +28,7 @@ public class LiftSystem
      */
 
     public static final int THROW  = 2500; //Need to measure
-    public static final int DUMP   = 850; //Subject to change
+    public static final int DUMP   = -850; //Subject to change
     public static final int BOTTOM = 0;
 
     public static final int DROP = 1500;  //Need to measure

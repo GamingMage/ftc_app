@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Gold: Close Crater", group="Pushbot")
+@Autonomous(name="Gold: Close Crater View", group="Vuforia")
 //@Disabled
 public class GoldCloseCraterAutoV extends OpMode{
 

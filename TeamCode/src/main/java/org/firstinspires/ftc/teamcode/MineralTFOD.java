@@ -57,10 +57,6 @@ public class MineralTFOD {
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
         }
-        /** Activate Tensor Flow Object Detection. */
-        if (tfod != null) {
-            tfod.activate();
-        }
     }
     /**
      * Initialize the Vuforia localization engine.
@@ -93,6 +89,8 @@ public class MineralTFOD {
 
     public MineralPosition MineralRecog() {
         if (tfod != null) {
+            /** Activate Tensor Flow Object Detection. */
+            tfod.activate();
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -118,6 +116,30 @@ public class MineralTFOD {
                         } else {
                             return MineralPosition.CENTER;
                         }
+                    }
+                }
+            }else if (updatedRecognitions.size() == 2) {
+                int goldMineralX = -1;
+                int silverMineral1X = -1;
+                int silverMineral2X = -1;
+
+                for (Recognition recognition : updatedRecognitions) {
+                    if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                        goldMineralX = (int) recognition.getLeft();
+                    } else if (silverMineral1X == -1) {
+                        silverMineral1X = (int) recognition.getLeft();
+                    } else {
+                        silverMineral2X = (int) recognition.getLeft();
+                    }
+                }
+                if (goldMineralX == -1) {
+                    return MineralPosition.LEFT;
+                }
+                if (goldMineralX != -1) {
+                    if (goldMineralX < silverMineral1X) {
+                        return MineralPosition.CENTER;
+                    } else if (goldMineralX > silverMineral1X) {
+                        return MineralPosition.RIGHT;
                     }
                 }
             }

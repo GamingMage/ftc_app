@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Gold: Close Crater", group="Pushbot")
+@Autonomous(name="Gold: No Crater View", group="Vuforia")
 //@Disabled
 public class GoldNoCraterAutoV extends OpMode{
 
@@ -15,12 +15,14 @@ public class GoldNoCraterAutoV extends OpMode{
     LiftSystem lift       = new LiftSystem();
     MineralTFOD view      = new MineralTFOD();
 
-    MineralPosition goldPos;
+    MineralPosition goldPos = MineralPosition.UNKNOWN;
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
     public void init() {
+        msStuckDetectInit = 11500;
+
         telemetry.log().add("before init");
         robot.init(hardwareMap);
         telemetry.log().add("after robot");
@@ -30,8 +32,6 @@ public class GoldNoCraterAutoV extends OpMode{
         telemetry.log().add("after sweeper");
         view.init(hardwareMap);
         telemetry.log().add("after Vuforia");
-
-        msStuckDetectInit = 10000;
 
         telemetry.log().add("after hardware init");
 
@@ -64,13 +64,13 @@ public class GoldNoCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                goldPos = view.MineralRecog();
-                telemetry.addData("GoldPos",goldPos);
+                robot.linearDrive(.45,6);
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.45,6);
-                // move forward through the middle element and into the depot
+                goldPos = view.MineralRecog();
+                telemetry.addData("GoldPos",goldPos);
+                telemetry.update();
                 stateMachineFlow++;
                 break;
             case 4:
@@ -123,7 +123,7 @@ public class GoldNoCraterAutoV extends OpMode{
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,-8);
                 }else if (goldPos == MineralPosition.CENTER){
-                    robot.linearDrive(.45,-24.5);
+                    robot.linearDrive(.45,-34);
                     stateMachineFlow = 13;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
