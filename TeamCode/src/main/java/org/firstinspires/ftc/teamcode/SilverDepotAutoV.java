@@ -11,9 +11,7 @@ public class SilverDepotAutoV extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
-    CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
-    ColorSens color = new ColorSens();
 
     MineralPosition goldPos;
     double time;
@@ -29,11 +27,7 @@ public class SilverDepotAutoV extends OpMode{
         lift.init(hardwareMap);
         telemetry.addData("after lift","here");
         telemetry.update();
-
-        sweeper.init(hardwareMap);
-        telemetry.addData("after sweeper","here");
-        telemetry.update();
-
+        
         msStuckDetectInit = 10000;
 
         telemetry.addData("after init","here");

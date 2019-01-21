@@ -11,7 +11,6 @@ public class GoldNoCraterAutoV extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot      = new RoverDrive();
-    CollectSystem sweeper = new CollectSystem();
     LiftSystem lift       = new LiftSystem();
     MineralTFOD view      = new MineralTFOD();
 
@@ -28,8 +27,6 @@ public class GoldNoCraterAutoV extends OpMode{
         telemetry.log().add("after robot");
         lift.init(hardwareMap);
         telemetry.log().add("after lift");
-        sweeper.init(hardwareMap);
-        telemetry.log().add("after sweeper");
         view.init(hardwareMap);
         telemetry.log().add("after Vuforia");
 
@@ -65,6 +62,7 @@ public class GoldNoCraterAutoV extends OpMode{
                 break;
             case 2:
                 robot.linearDrive(.45,6);
+                time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 3:
@@ -84,7 +82,7 @@ public class GoldNoCraterAutoV extends OpMode{
             case 5:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,40);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,39);
                     stateMachineFlow = 8;
                     break;
@@ -122,7 +120,7 @@ public class GoldNoCraterAutoV extends OpMode{
             case 10:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,-8);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,-34);
                     stateMachineFlow = 13;
                     break;
