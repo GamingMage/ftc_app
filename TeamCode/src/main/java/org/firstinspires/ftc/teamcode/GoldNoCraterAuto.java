@@ -11,7 +11,6 @@ public class GoldNoCraterAuto extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot       = new RoverDrive();
-    CollectSystem sweeper = new CollectSystem();
     LiftSystem lift = new LiftSystem();
 
     double time;
@@ -26,10 +25,6 @@ public class GoldNoCraterAuto extends OpMode{
         telemetry.update();
         lift.init(hardwareMap);
         telemetry.addData("after lift","here");
-        telemetry.update();
-
-        sweeper.init(hardwareMap);
-        telemetry.addData("after sweeper","here");
         telemetry.update();
 
         msStuckDetectInit = 10000;
@@ -73,7 +68,7 @@ public class GoldNoCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.45,45);
+                robot.linearDrive(.45,42);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
@@ -124,7 +119,7 @@ public class GoldNoCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.45,-40);
+                robot.linearDrive(.45,-37);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;

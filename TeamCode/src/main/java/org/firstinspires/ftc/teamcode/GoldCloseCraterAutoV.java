@@ -11,7 +11,6 @@ public class GoldCloseCraterAutoV extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot      = new RoverDrive();
-    CollectSystem sweeper = new CollectSystem();
     LiftSystem lift       = new LiftSystem();
     MineralTFOD view      = new MineralTFOD();
 
@@ -26,8 +25,6 @@ public class GoldCloseCraterAutoV extends OpMode{
         telemetry.log().add("after robot");
         lift.init(hardwareMap);
         telemetry.log().add("after lift");
-        sweeper.init(hardwareMap);
-        telemetry.log().add("after sweeper");
         view.init(hardwareMap);
         telemetry.log().add("after Vuforia");
 
