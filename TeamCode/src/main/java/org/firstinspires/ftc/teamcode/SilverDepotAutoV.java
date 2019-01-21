@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Silver: No Depot", group="Pushbot")
+@Autonomous(name="Silver: Depot View", group="Vuforia")
 //@Disabled
 public class SilverDepotAutoV extends OpMode{
 
