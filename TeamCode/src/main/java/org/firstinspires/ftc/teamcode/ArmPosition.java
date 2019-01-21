@@ -2,5 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 public enum ArmPosition {
     TOP,
-    BOTTOM;
+    BOTTOM,
+    IN,
+    OUT;
 }
