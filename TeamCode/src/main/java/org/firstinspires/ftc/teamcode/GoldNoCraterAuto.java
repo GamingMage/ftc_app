@@ -73,7 +73,7 @@ public class GoldNoCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.linearDrive(.45,45);
+                robot.linearDrive(.45,42);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
@@ -124,7 +124,7 @@ public class GoldNoCraterAuto extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.45,-40);
+                robot.linearDrive(.45,-37);
                 // turn towards the crater
                 stateMachineFlow++;
                 break;
