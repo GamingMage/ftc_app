@@ -10,55 +10,46 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class SilverNoDepotAutoV extends OpMode{
 
     private int stateMachineFlow;
-    RoverDrive robot       = new RoverDrive();
-    LiftSystem lift = new LiftSystem();
+    RoverDrive robot      = new RoverDrive();
+    LiftSystem lift       = new LiftSystem();
+    MineralTFOD view      = new MineralTFOD();
 
-    MineralPosition goldPos;
+    MineralPosition goldPos = MineralPosition.UNKNOWN;
     double time;
     private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
     public void init() {
-        telemetry.addData("before init","here");
-        telemetry.update();
+        msStuckDetectInit = 11500;
+
+        telemetry.log().add("before init");
         robot.init(hardwareMap);
-        telemetry.addData("after robot","here");
-        telemetry.update();
+        telemetry.log().add("after robot");
         lift.init(hardwareMap);
-        telemetry.addData("after lift","here");
-        telemetry.update();
+        telemetry.log().add("after lift");
+        view.init(hardwareMap);
+        telemetry.log().add("after Vuforia");
 
-        msStuckDetectInit = 10000;
-
-        telemetry.addData("after init","here");
-        telemetry.update();
+        telemetry.log().add("after hardware init");
 
         stateMachineFlow = 0;
-        //lift.hookServo.setPosition(lift.HOOK_ON);
         lift.liftControl(.65,LiftDirection.DOWN);
-        //lift.liftHookOnOff(HookOnOff.HOOK);
         lift.liftMotor.setPower(-.2);//hold robot on lander
-        telemetry.addData("after hook on to lander", 0);
-        telemetry.addData("Case",stateMachineFlow);
-        telemetry.update();
+        telemetry.log().add("after hook on to lander");
+        telemetry.log().add("Case",stateMachineFlow);
     }
 
-    /*@Override
+    @Override
     public void init_loop(){
 
-
-        telemetry.addData("Arm Pos",gilgearmesh.getArmPosition());
-        telemetry.addData("Color",jewelColor);
-        telemetry.addData("Case",stateMachineFlow);
-        telemetry.update();}*/
-
+    }
     @Override
     public void loop() {
         switch(stateMachineFlow){
             case 0:
                 runtime.reset();
 
-                telemetry.addData("Case",stateMachineFlow);
+                telemetry.addData("GoldPos",goldPos);
                 telemetry.update();
                 time = getRuntime();
                 stateMachineFlow++;
@@ -74,14 +65,20 @@ public class SilverNoDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-40);
-                }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,40);
-                }
+                goldPos = view.MineralRecog();
+                telemetry.addData("GoldPos",goldPos);
+                telemetry.update();
                 stateMachineFlow++;
                 break;
             case 4:
+                if (goldPos == MineralPosition.LEFT){
+                    robot.gStatTurn(.6,-30);
+                }else if (goldPos == MineralPosition.RIGHT){
+                    robot.gStatTurn(.6,30);
+                }
+                stateMachineFlow++;
+                break;
+            case 5:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,32);
                 }else if (goldPos == MineralPosition.CENTER){
@@ -93,15 +90,15 @@ public class SilverNoDepotAutoV extends OpMode{
                 }
                 stateMachineFlow++;
                 break;
-            case 5:
+            case 6:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,40);
+                    robot.gStatTurn(.6,30);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-40);
+                    robot.gStatTurn(.6,-30);
                 }
                 stateMachineFlow++;
                 break;
-            case 6:
+            case 7:
                 robot.linearDrive(.45,5);
                 stateMachineFlow++;
                 break;

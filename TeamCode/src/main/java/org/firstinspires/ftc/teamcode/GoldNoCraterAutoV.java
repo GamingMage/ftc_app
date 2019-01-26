@@ -50,7 +50,7 @@ public class GoldNoCraterAutoV extends OpMode{
             case 0:
                 runtime.reset();
 
-                telemetry.addData("Case",stateMachineFlow);
+                telemetry.addData("GoldPos",goldPos);
                 telemetry.update();
                 time = getRuntime();
                 stateMachineFlow++;
@@ -73,9 +73,9 @@ public class GoldNoCraterAutoV extends OpMode{
                 break;
             case 4:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-40);
+                    robot.gStatTurn(.6,30);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,40);
+                    robot.gStatTurn(.6,-30);
                 }
                 stateMachineFlow++;
                 break;
@@ -93,17 +93,17 @@ public class GoldNoCraterAutoV extends OpMode{
                 break;
             case 6:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,85);
+                    robot.gStatTurn(.6,-75);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-85);
+                    robot.gStatTurn(.6,75);
                 }
                 stateMachineFlow++;
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,8);
+                    robot.linearDrive(.45,20);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,8);
+                    robot.linearDrive(.45,20);
                 }
                 stateMachineFlow++;
                 break;
@@ -119,23 +119,21 @@ public class GoldNoCraterAutoV extends OpMode{
                 break;
             case 10:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,-8);
+                    robot.linearDrive(.45,-20);
                 }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.45,-34);
+                    robot.linearDrive(.45,-41);
                     stateMachineFlow = 13;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,-8);
+                    robot.linearDrive(.45,-20);
                 }
-                robot.gStatTurn(.6,90);
-                // turn towards the crater
                 stateMachineFlow++;
                 break;
             case 11:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-85);
+                    robot.gStatTurn(.6,75);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,85);
+                    robot.gStatTurn(.6,-75);
                 }
                 stateMachineFlow++;
                 break;
@@ -149,9 +147,9 @@ public class GoldNoCraterAutoV extends OpMode{
                 break;
             case 13:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,40);
+                    robot.gStatTurn(.6,-30);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-40);
+                    robot.gStatTurn(.6,30);
                 }
                 stateMachineFlow++;
                 break;
