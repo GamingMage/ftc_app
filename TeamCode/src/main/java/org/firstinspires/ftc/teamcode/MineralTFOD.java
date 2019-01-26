@@ -57,10 +57,6 @@ public class MineralTFOD {
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
         }
-        /** Activate Tensor Flow Object Detection. */
-        if (tfod != null) {
-            tfod.activate();
-        }
     }
     /**
      * Initialize the Vuforia localization engine.
@@ -83,12 +79,14 @@ public class MineralTFOD {
     /**
      * Initialize the Tensor Flow Object Detection engine.
      */
-    private void initTfod() {
+    public void initTfod() {
         int tfodMonitorViewId = hwMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hwMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+        /** Activate Tensor Flow Object Detection. */
+        tfod.activate();
     }
 
     public MineralPosition MineralRecog() {
@@ -119,9 +117,33 @@ public class MineralTFOD {
                             return MineralPosition.CENTER;
                         }
                     }
+                }else if (updatedRecognitions.size() == 2) {
+                    int goldMineralX = -1;
+                    int silverMineral1X = -1;
+                    int silverMineral2X = -1;
+
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                            goldMineralX = (int) recognition.getLeft();
+                        } else if (silverMineral1X == -1) {
+                            silverMineral1X = (int) recognition.getLeft();
+                        } else {
+                            silverMineral2X = (int) recognition.getLeft();
+                        }
+                    }
+                    if (goldMineralX == -1) {
+                        return MineralPosition.LEFT;
+                    }
+                    if (goldMineralX != -1) {
+                        if (goldMineralX < silverMineral1X) {
+                            return MineralPosition.CENTER;
+                        } else if (goldMineralX > silverMineral1X) {
+                            return MineralPosition.RIGHT;
+                        }
+                    }
                 }
             }
         }
-        return MineralPosition.CENTER;
+        return MineralPosition.UNKNOWN;
     }
 }
