@@ -133,8 +133,7 @@ public class MineralTFOD {
                     }
                     if (goldMineralX == -1) {
                         return MineralPosition.LEFT;
-                    }
-                    if (goldMineralX != -1) {
+                    } else {
                         if (goldMineralX < silverMineral1X) {
                             return MineralPosition.CENTER;
                         } else if (goldMineralX > silverMineral1X) {
