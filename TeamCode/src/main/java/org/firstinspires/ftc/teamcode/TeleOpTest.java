@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Drive_Test", group="Pushbot")
-//@Disabled
+@Disabled
 public class TeleOpTest extends OpMode {
 
     RoverDrive robot   =  new RoverDrive();
@@ -52,10 +52,6 @@ public class TeleOpTest extends OpMode {
         if (gamepad2.dpad_down) {
             lift.liftHookOnOff(HookOnOff.DROP);
         }*/
-        /*if (gamepad2.dpad_up) {sweeper.rakePos(.6,ArmPosition.OUT);}
-        if (gamepad2.dpad_down) {sweeper.rakePos(.6,ArmPosition.IN);}
-        if (gamepad2.dpad_right) {sweeper.wristPos(sweeper.WRIST_DOWN);}
-        if (gamepad2.dpad_left) {sweeper.wristPos(sweeper.WRIST_UP);}*/
 
         if (gamepad2.y) {
             lift.armPos(ArmPosition.TOP);
