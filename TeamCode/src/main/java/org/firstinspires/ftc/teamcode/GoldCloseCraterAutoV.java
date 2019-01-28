@@ -163,6 +163,8 @@ public class GoldCloseCraterAutoV extends OpMode{
                 break;
             case 15:
                 robot.gStatTurn(.6,90);
+                stateMachineFlow++;
+                break;
             case 16:
                 robot.linearDrive(.55,-23);
                 //move towards the crater
