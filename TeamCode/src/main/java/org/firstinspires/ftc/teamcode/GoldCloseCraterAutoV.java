@@ -16,6 +16,7 @@ public class GoldCloseCraterAutoV extends OpMode{
 
     MineralPosition goldPos;
     double time;
+    int initView = 0;
     private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
@@ -25,8 +26,8 @@ public class GoldCloseCraterAutoV extends OpMode{
         telemetry.log().add("after robot");
         lift.init(hardwareMap);
         telemetry.log().add("after lift");
-        view.init(hardwareMap);
-        telemetry.log().add("after Vuforia");
+       /* view.init(hardwareMap);
+        telemetry.log().add("after Vuforia");*/
 
         msStuckDetectInit = 11500;
 
@@ -41,6 +42,11 @@ public class GoldCloseCraterAutoV extends OpMode{
 
     @Override
     public void init_loop(){
+        if (initView == 0){
+            view.init(hardwareMap);
+            telemetry.log().add("After Viewforia");
+            initView = 4;
+        }
 
     }
 
@@ -121,7 +127,7 @@ public class GoldCloseCraterAutoV extends OpMode{
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,-20);
                 }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.45,-25);
+                    robot.linearDrive(.45,-30);
                     stateMachineFlow = 15;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
@@ -166,7 +172,7 @@ public class GoldCloseCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 16:
-                robot.linearDrive(.55,-23);
+                robot.linearDrive(.55,-27);
                 //move towards the crater
                 stateMachineFlow++;
                 break;

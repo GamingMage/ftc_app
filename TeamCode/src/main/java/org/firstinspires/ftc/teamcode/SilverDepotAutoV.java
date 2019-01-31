@@ -16,6 +16,7 @@ public class SilverDepotAutoV extends OpMode{
 
     MineralPosition goldPos = MineralPosition.UNKNOWN;
     double time;
+    int initView =0;
     private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
@@ -27,8 +28,8 @@ public class SilverDepotAutoV extends OpMode{
         telemetry.log().add("after robot");
         lift.init(hardwareMap);
         telemetry.log().add("after lift");
-        view.init(hardwareMap);
-        telemetry.log().add("after Vuforia");
+        //view.init(hardwareMap);
+        //telemetry.log().add("after Vuforia");
 
         telemetry.log().add("after hardware init");
 
@@ -41,7 +42,11 @@ public class SilverDepotAutoV extends OpMode{
 
     @Override
     public void init_loop(){
-
+        if (initView == 0){
+            view.init(hardwareMap);
+            telemetry.log().add("After Viewforia");
+            initView = 4;
+        }
     }
     @Override
     public void loop() {
