@@ -14,13 +14,15 @@ public class GoldFarCraterAutoV extends OpMode{
     LiftSystem lift       = new LiftSystem();
     MineralTFOD view      = new MineralTFOD();
 
-    MineralPosition goldPos;
+    MineralPosition goldPos = MineralPosition.UNKNOWN;
     double time;
     int initView =0;
     private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
     public void init() {
+        msStuckDetectInit = 11500;
+
         telemetry.log().add("before init");
         robot.init(hardwareMap);
         telemetry.log().add("after robot");
@@ -28,8 +30,6 @@ public class GoldFarCraterAutoV extends OpMode{
         telemetry.log().add("after lift");
        // view.init(hardwareMap);
         //telemetry.log().add("after Vuforia");
-
-        msStuckDetectInit = 11500;
 
         telemetry.log().add("after hardware init");
 
@@ -44,7 +44,7 @@ public class GoldFarCraterAutoV extends OpMode{
     public void init_loop(){
         if (initView == 0){
             view.init(hardwareMap);
-            telemetry.log().add("After Viewforia");
+            telemetry.log().add("After Vuforia");
             initView = 4;
         }
     }
@@ -78,9 +78,9 @@ public class GoldFarCraterAutoV extends OpMode{
                 break;
             case 4:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,30);
+                    robot.gStatTurn(.6,33);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-30);
+                    robot.gStatTurn(.6,-33);
                 }
                 stateMachineFlow++;
                 break;
@@ -98,9 +98,9 @@ public class GoldFarCraterAutoV extends OpMode{
                 break;
             case 6:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-75);
+                    robot.gStatTurn(.6,-72);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,75);
+                    robot.gStatTurn(.6,72);
                 }
                 stateMachineFlow++;
                 break;
@@ -113,12 +113,12 @@ public class GoldFarCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 8:
-                lift.armPos(ArmPosition.TOP);
+                lift.armPosMark(ArmPosition.TOP);
                 // dump the marker into depot
                 stateMachineFlow++;
                 break;
             case 9:
-                lift.armPos(ArmPosition.BOTTOM);
+                lift.armPosMark(ArmPosition.BOTTOM);
                 //lower the arm
                 stateMachineFlow++;
                 break;
@@ -136,9 +136,9 @@ public class GoldFarCraterAutoV extends OpMode{
                 break;
             case 11:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,75);
+                    robot.gStatTurn(.6,72);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-75);
+                    robot.gStatTurn(.6,-72);
                 }
                 stateMachineFlow++;
                 break;
@@ -152,9 +152,9 @@ public class GoldFarCraterAutoV extends OpMode{
                 break;
             case 13:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-30);
+                    robot.gStatTurn(.6,-33);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,30);
+                    robot.gStatTurn(.6,33);
                 }
                 stateMachineFlow++;
                 break;
@@ -171,31 +171,26 @@ public class GoldFarCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 16:
-                robot.linearDrive(.55,-33);
+                robot.linearDrive(.55,-28);
                 //move towards the crater
                 stateMachineFlow++;
                 break;
             case 17:
-                robot.linearDrive(.45,-28);
-                //move towards the crater
-                stateMachineFlow++;
-                break;
-            case 18:
                 robot.gStatTurn(.6,-89);
                 //turn around the side of the lander
                 stateMachineFlow++;
                 break;
-            case 19:
+            case 18:
                 robot.linearDrive(.5,-78);
                 // drive towards the other side of the silver side
                 stateMachineFlow++;
                 break;
-            case 20:
+            case 19:
                 robot.gStatTurn(.6,130);
                 // turn left toward the crater
                 stateMachineFlow++;
                 break;
-            case 21:
+            case 20:
                 robot.linearDrive(.65,-32);
                 // move forward until you are partially parked in the crater
                 stateMachineFlow++;

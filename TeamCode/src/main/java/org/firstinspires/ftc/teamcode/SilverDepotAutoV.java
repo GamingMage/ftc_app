@@ -44,7 +44,7 @@ public class SilverDepotAutoV extends OpMode{
     public void init_loop(){
         if (initView == 0){
             view.init(hardwareMap);
-            telemetry.log().add("After Viewforia");
+            telemetry.log().add("After Vuforia");
             initView = 4;
         }
     }
@@ -86,7 +86,7 @@ public class SilverDepotAutoV extends OpMode{
             case 5:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,29);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,21);
                 }else if (goldPos == MineralPosition.RIGHT){
                     robot.linearDrive(.45,29);
@@ -96,7 +96,7 @@ public class SilverDepotAutoV extends OpMode{
             case 6:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,-29);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,-7);
                     stateMachineFlow = 8;
                     break;
@@ -141,11 +141,11 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 13:
-                lift.armPos(ArmPosition.TOP);
+                lift.armPosMark(ArmPosition.TOP);
                 stateMachineFlow++;
                 break;
             case 14:
-                lift.armPos(ArmPosition.BOTTOM);
+                lift.armPosMark(ArmPosition.BOTTOM);
                 stateMachineFlow++;
                 break;
             case 15:
