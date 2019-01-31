@@ -44,7 +44,7 @@ public class SilverNoDepotAutoV extends OpMode{
     public void init_loop(){
         if (initView == 0){
             view.init(hardwareMap);
-            telemetry.log().add("After Viewforia");
+            telemetry.log().add("After Vuforia");
             initView = 4;
         }
 
@@ -87,7 +87,7 @@ public class SilverNoDepotAutoV extends OpMode{
             case 5:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,32);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,37);
                     stateMachineFlow = 6;
                     break;
