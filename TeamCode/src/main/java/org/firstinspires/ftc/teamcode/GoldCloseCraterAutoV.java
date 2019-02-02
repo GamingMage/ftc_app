@@ -99,9 +99,9 @@ public class GoldCloseCraterAutoV extends OpMode{
                 break;
             case 6:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-72);
+                    robot.gStatTurn(.6,-78);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,72);
+                    robot.gStatTurn(.6,78);
                 }
                 stateMachineFlow++;
                 break;
@@ -137,9 +137,9 @@ public class GoldCloseCraterAutoV extends OpMode{
                 break;
             case 11:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,72);
+                    robot.gStatTurn(.6,78);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-72);
+                    robot.gStatTurn(.6,-78);
                 }
                 stateMachineFlow++;
                 break;
