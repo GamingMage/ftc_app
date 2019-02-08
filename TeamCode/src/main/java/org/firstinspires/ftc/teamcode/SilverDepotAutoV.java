@@ -122,7 +122,7 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 9:
-                robot.gStatTurn(.6,90);
+                robot.gStatTurn(.6,87); //seems to be over turning... so i lowered it
                 stateMachineFlow++;
                 break;
             case 10:
