@@ -35,7 +35,7 @@ public class LiftSystem
     public static final int HOOK = 0; //Should be fine since we start here
 
     public static final double HOOK_ON    =  1; //Flip hook up into the bracket
-    public static final double HOOK_OFF  = 0.3; //Flip hook out
+    public static final double HOOK_OFF   = .3; //Flip hook out
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
