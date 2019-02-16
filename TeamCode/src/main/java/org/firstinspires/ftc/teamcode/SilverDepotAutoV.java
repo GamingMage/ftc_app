@@ -44,7 +44,7 @@ public class SilverDepotAutoV extends OpMode{
     public void init_loop(){
         if (initView == 0){
             view.init(hardwareMap);
-            telemetry.log().add("After Viewforia");
+            telemetry.log().add("After Vuforia");
             initView = 4;
         }
     }
@@ -65,17 +65,21 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.45,6);
+                robot.linearDrive(.45,-3);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 3:
+                robot.gStatTurn(.6,180);
+                stateMachineFlow++;
+                break;
+            case 4:
                 goldPos = view.MineralRecog();
                 telemetry.addData("GoldPos",goldPos);
                 telemetry.update();
                 stateMachineFlow++;
                 break;
-            case 4:
+            case 5:
                 if (goldPos == MineralPosition.LEFT){
                     robot.gStatTurn(.6,-30);
                 }else if (goldPos == MineralPosition.RIGHT){
@@ -83,20 +87,20 @@ public class SilverDepotAutoV extends OpMode{
                 }
                 stateMachineFlow++;
                 break;
-            case 5:
+            case 6:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,29);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,21);
                 }else if (goldPos == MineralPosition.RIGHT){
                     robot.linearDrive(.45,29);
                 }
                 stateMachineFlow++;
                 break;
-            case 6:
+            case 7:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,-29);
-                }else if (goldPos == MineralPosition.CENTER){
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
                     robot.linearDrive(.45,-7);
                     stateMachineFlow = 8;
                     break;
@@ -105,7 +109,7 @@ public class SilverDepotAutoV extends OpMode{
                 }
                 stateMachineFlow++;
                 break;
-            case 7:
+            case 8:
                 if (goldPos == MineralPosition.LEFT){
                     robot.gStatTurn(.6,30);
                 }else if (goldPos == MineralPosition.RIGHT){
@@ -113,7 +117,7 @@ public class SilverDepotAutoV extends OpMode{
                 }
                 stateMachineFlow++;
                 break;
-            case 8:
+            case 9:
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.45,16);
                 }else if (goldPos == MineralPosition.RIGHT){
@@ -121,34 +125,34 @@ public class SilverDepotAutoV extends OpMode{
                 }
                 stateMachineFlow++;
                 break;
-            case 9:
-                robot.gStatTurn(.6,90);
+            case 10:
+                robot.gStatTurn(.6,87); //seems to be over turning... so i lowered it
                 stateMachineFlow++;
                 break;
-            case 10:
+            case 11:
                 robot.linearDrive(.45,55);
                 // turn right
                 stateMachineFlow++;
                 break;
-            case 11:
+            case 12:
                 robot.gStatTurn(.6,37);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
-            case 12:
+            case 13:
                 robot.linearDrive(.45,25);
                 // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
-            case 13:
-                lift.armPos(ArmPosition.TOP);
-                stateMachineFlow++;
-                break;
             case 14:
-                lift.armPos(ArmPosition.BOTTOM);
+                lift.armPosMark(ArmPosition.TOP);
                 stateMachineFlow++;
                 break;
             case 15:
+                lift.armPosMark(ArmPosition.BOTTOM);
+                stateMachineFlow++;
+                break;
+            case 16:
                 robot.linearDrive(.65,-68);
                 // move forward to the blue depot
                 stateMachineFlow++;
