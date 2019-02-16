@@ -117,7 +117,6 @@ public class LiftSystem
             while (armMotor.isBusy());
             armMotor.setPower(0);
             armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             liftControl(.5,LiftDirection.DOWN); //lower the lift after the box is back down
         }
     }
