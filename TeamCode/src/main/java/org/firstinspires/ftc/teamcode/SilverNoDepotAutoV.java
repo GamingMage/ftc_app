@@ -34,7 +34,7 @@ public class SilverNoDepotAutoV extends OpMode{
         telemetry.log().add("after hardware init");
 
         stateMachineFlow = 0;
-        lift.liftControl(.65,LiftDirection.DOWN);
+        lift.liftControl(.85,LiftDirection.DOWN);
         lift.liftMotor.setPower(-.2);//hold robot on lander
         telemetry.log().add("after hook on to lander");
         telemetry.log().add("Case",stateMachineFlow);
@@ -66,50 +66,61 @@ public class SilverNoDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.45,-3);
+                robot.linearDrive(.45,-6);
                 // move forward through the middle element and into the depot
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.gStatTurn(.6,180);
+                robot.gStatTurn(.6,88);
                 stateMachineFlow++;
                 break;
             case 4:
-                goldPos = view.MineralRecog();
-                telemetry.addData("GoldPos",goldPos);
-                telemetry.update();
+                robot.linearDrive(.45,3);
                 stateMachineFlow++;
                 break;
             case 5:
-                if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-30);
-                }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,30);
-                }
+                robot.gStatTurn(.6,88);
+                time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 6:
-                if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,32);
-                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.45,37);
-                    stateMachineFlow = 6;
-                    break;
-                }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,32);
+                goldPos = view.MineralRecog();
+                telemetry.addData("GoldPos",goldPos);
+                telemetry.update();
+                if (getRuntime() - time > 2) {
+                    stateMachineFlow++;
                 }
-                stateMachineFlow++;
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,30);
-                }else if (goldPos == MineralPosition.RIGHT){
                     robot.gStatTurn(.6,-30);
+                }else if (goldPos == MineralPosition.RIGHT){
+                    robot.gStatTurn(.6,30);
                 }
                 stateMachineFlow++;
                 break;
             case 8:
-                robot.linearDrive(.45,5);
+                if (goldPos == MineralPosition.LEFT){
+                    robot.linearDrive(.45,30);
+                }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
+                    robot.linearDrive(.45,34);
+                    stateMachineFlow = 10;
+                    break;
+                }else if (goldPos == MineralPosition.RIGHT){
+                    robot.linearDrive(.45,30);
+                }
+                stateMachineFlow++;
+                break;
+            case 9:
+                if (goldPos == MineralPosition.LEFT){
+                    robot.gStatTurn(.6,30);
+                }else if (goldPos == MineralPosition.RIGHT){
+                    robot.gStatTurn(.6,-30);
+                }
+                stateMachineFlow++;
+                break;
+            case 10:
+                robot.linearDrive(.45,3);
                 stateMachineFlow++;
                 break;
         }

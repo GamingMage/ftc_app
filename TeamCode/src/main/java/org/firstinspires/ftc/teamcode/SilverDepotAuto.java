@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Silver: Depot", group="Pushbot")
-//@Disabled
+@Disabled
 public class SilverDepotAuto extends OpMode{
 
     private int stateMachineFlow;
