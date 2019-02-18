@@ -67,7 +67,7 @@ public class GoldCloseCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 2:
-                robot.linearDrive(.45,-6);
+                robot.linearDrive(.6,-8);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
@@ -76,55 +76,55 @@ public class GoldCloseCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.45,3);
+                robot.linearDrive(.55,2.75);
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.gStatTurn(.6,88);
+                robot.gStatTurn(.6,87);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 6:
-                goldPos = view.MineralRecog();
-                telemetry.addData("GoldPos",goldPos);
-                telemetry.update();
-                if (getRuntime() - time > 2) {
+                if (getRuntime() - time > 1.25) {
+                    goldPos = view.MineralRecog();
+                    telemetry.addData("GoldPos",goldPos);
+                    telemetry.update();
                     stateMachineFlow++;
                 }
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,33);
+                    robot.gStatTurn(.6,35);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-33);
+                    robot.gStatTurn(.6,-35);
                 }
                 stateMachineFlow++;
                 break;
             case 8:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,40);
+                    robot.linearDrive(.6,38);
                 }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.45,36);
+                    robot.linearDrive(.65,37);
                     stateMachineFlow = 11;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,40);
+                    robot.linearDrive(.6,38);
                 }
                 stateMachineFlow++;
                 break;
             case 9:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-78);
+                    robot.gStatTurn(.6,-80);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,78);
+                    robot.gStatTurn(.6,80);
                 }
                 stateMachineFlow++;
                 break;
             case 10:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,20);
+                    robot.linearDrive(.6,17);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,20);
+                    robot.linearDrive(.6,17);
                 }
                 stateMachineFlow++;
                 break;
@@ -140,36 +140,35 @@ public class GoldCloseCraterAutoV extends OpMode{
                 break;
             case 13:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.45,-65);
+                    robot.linearDrive(.6,-65);
                     stateMachineFlow = 18;
                     break;
                 }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.45,-21);
+                    robot.linearDrive(.65,-28);
                     stateMachineFlow++;
                     break;
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.45,-65);
+                    robot.linearDrive(.6,-65);
                     stateMachineFlow = 18;
                     break;
                 }
             case 14:
-                robot.gStatTurn(.6,88);
+                robot.gStatTurn(.65,88);
                 stateMachineFlow++;
                 break;
             case 15:
-                robot.linearDrive(.55,-30);
+                robot.linearDrive(.65,-33);
                 //move towards the crater
                 stateMachineFlow++;
                 break;
             case 16:
-                robot.gStatTurn(.6,-31);
+                robot.gStatTurn(.65,-33);
                 stateMachineFlow++;
                 break;
             case 17:
-                robot.linearDrive(.65,-23);
+                robot.linearDrive(.65,-24);
                 stateMachineFlow++;
                 break;
         }
     }
 }//end of class
-
