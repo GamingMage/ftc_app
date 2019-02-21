@@ -70,15 +70,15 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.gStatTurn(.6,88);
+                robot.gStatTurn(.8,86);
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.6,2.75);
+                robot.linearDrive(.6,3);
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.gStatTurn(.6,87);
+                robot.gStatTurn(.8,85);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
@@ -92,9 +92,9 @@ public class SilverDepotAutoV extends OpMode{
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-35);
+                    robot.gStatTurn(.6,34);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,35);
+                    robot.gStatTurn(.6,-34);
                 }
                 stateMachineFlow++;
                 break;
@@ -102,7 +102,7 @@ public class SilverDepotAutoV extends OpMode{
                 if (goldPos == MineralPosition.LEFT){
                     robot.linearDrive(.65,27);
                 }else if (goldPos == MineralPosition.CENTER || goldPos == MineralPosition.UNKNOWN){
-                    robot.linearDrive(.65,21);
+                    robot.linearDrive(.65,23);
                 }else if (goldPos == MineralPosition.RIGHT){
                     robot.linearDrive(.65,27);
                 }
@@ -122,36 +122,36 @@ public class SilverDepotAutoV extends OpMode{
                 break;
             case 10:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,35);
+                    robot.gStatTurn(.6,-34);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-35);
+                    robot.gStatTurn(.6,34);
                 }
                 stateMachineFlow++;
                 break;
             case 11:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.linearDrive(.65,12);
+                    robot.linearDrive(.65,13);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.linearDrive(.65,12);
+                    robot.linearDrive(.65,13);
                 }
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.gStatTurn(.6,87); //seems to be over turning... so i lowered it
+                robot.gStatTurn(.8,83); //seems to be over turning... so i lowered it
                 stateMachineFlow++;
                 break;
             case 13:
-                robot.linearDrive(.65,53);
+                robot.linearDrive(.65,54);
                 // turn right
                 stateMachineFlow++;
                 break;
             case 14:
-                robot.gStatTurn(.6,37);
+                robot.gStatTurn(.8,30);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 15:
-                robot.linearDrive(.65,25);
+                robot.linearDrive(.65,15);
                 // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
@@ -164,7 +164,7 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 18:
-                robot.linearDrive(.7,-68);
+                robot.linearDrive(.7,-64);
                 // move forward to the blue depot
                 stateMachineFlow++;
                 break;
