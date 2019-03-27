@@ -67,19 +67,19 @@ public class SilverNoDepotAutoV extends OpMode{
                 break;
             case 2:
                 robot.linearDrive(.6,-8);
-                // move forward through the middle element and into the depot
+                time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.gStatTurn(.6,88);
+                robot.gStatTurn(.65,85);
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.6,2.75);
+                robot.linearDrive(.55,3);
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.gStatTurn(.6,87);
+                robot.gStatTurn(.65,84);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
@@ -93,9 +93,9 @@ public class SilverNoDepotAutoV extends OpMode{
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-35);
+                    robot.gStatTurn(.65,32);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,35);
+                    robot.gStatTurn(.65,-32);
                 }
                 stateMachineFlow++;
                 break;
@@ -113,9 +113,9 @@ public class SilverNoDepotAutoV extends OpMode{
                 break;
             case 9:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,35);
+                    robot.gStatTurn(.65,-32);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-35);
+                    robot.gStatTurn(.65,32);
                 }
                 stateMachineFlow++;
                 break;

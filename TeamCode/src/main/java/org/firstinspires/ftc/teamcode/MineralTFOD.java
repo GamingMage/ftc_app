@@ -143,6 +143,24 @@ public class MineralTFOD {
                             return MineralPosition.RIGHT;
                         }
                     }
+                }else if (updatedRecognitions.size() == 1 || updatedRecognitions.size() == 0) {
+                    int goldMineralX = -1;
+
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                            goldMineralX = (int) recognition.getLeft();
+                        }
+                    }
+                    if (goldMineralX == -1) {
+                        return MineralPosition.LEFT;
+                    } else {
+                        if (goldMineralX < .5) {
+                            return MineralPosition.CENTER;
+                        }else {
+                            return MineralPosition.RIGHT;
+                        }
+                    }
+
                 }
             }
         }

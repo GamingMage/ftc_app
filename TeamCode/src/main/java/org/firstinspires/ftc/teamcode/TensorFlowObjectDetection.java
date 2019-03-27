@@ -160,6 +160,24 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                                   telemetry.addData("Gold Mineral Position", "Right");
                               }
                           }
+                      }else if (updatedRecognitions.size() == 1 || updatedRecognitions.size() == 0) {
+                          int goldMineralX = -1;
+
+                          for (Recognition recognition : updatedRecognitions) {
+                              if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                  goldMineralX = (int) recognition.getLeft();
+                              }
+                          }
+                          if (goldMineralX == -1) {
+                              telemetry.addData("Gold Mineral Position", "Left");
+                          } else {
+                              if (goldMineralX < .5) {
+                                  telemetry.addData("Gold Mineral Position", "Center");
+                              }else {
+                                  telemetry.addData("Gold Mineral Position", "Right");
+                              }
+                          }
+
                       }
                       telemetry.update();
                     }

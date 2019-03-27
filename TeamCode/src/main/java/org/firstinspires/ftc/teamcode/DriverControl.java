@@ -23,7 +23,7 @@ public class DriverControl extends OpMode {
 
         msStuckDetectLoop = 8000;
 
-        lift.liftControl(.5,LiftDirection.DOWN);
+        lift.liftControl(.85,LiftDirection.DOWN);
 
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

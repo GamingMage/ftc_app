@@ -72,7 +72,7 @@ public class GoldCloseCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.gStatTurn(.65,87);
+                robot.gStatTurn(.65,85);
                 stateMachineFlow++;
                 break;
             case 4:
@@ -80,7 +80,7 @@ public class GoldCloseCraterAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.gStatTurn(.65,87);
+                robot.gStatTurn(.65,85);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;

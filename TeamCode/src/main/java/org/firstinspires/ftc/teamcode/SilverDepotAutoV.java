@@ -66,19 +66,19 @@ public class SilverDepotAutoV extends OpMode{
                 break;
             case 2:
                 robot.linearDrive(.6,-8);
-                // move forward through the middle element and into the depot
+                time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 3:
-                robot.gStatTurn(.8,86);
+                robot.gStatTurn(.65,85);
                 stateMachineFlow++;
                 break;
             case 4:
-                robot.linearDrive(.6,3);
+                robot.linearDrive(.55,3);
                 stateMachineFlow++;
                 break;
             case 5:
-                robot.gStatTurn(.8,85);
+                robot.gStatTurn(.65,84);
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
@@ -92,9 +92,9 @@ public class SilverDepotAutoV extends OpMode{
                 break;
             case 7:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,34);
+                    robot.gStatTurn(.65,30);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,-34);
+                    robot.gStatTurn(.65,-32);
                 }
                 stateMachineFlow++;
                 break;
@@ -122,9 +122,9 @@ public class SilverDepotAutoV extends OpMode{
                 break;
             case 10:
                 if (goldPos == MineralPosition.LEFT){
-                    robot.gStatTurn(.6,-34);
+                    robot.gStatTurn(.6,-30);
                 }else if (goldPos == MineralPosition.RIGHT){
-                    robot.gStatTurn(.6,34);
+                    robot.gStatTurn(.6,32);
                 }
                 stateMachineFlow++;
                 break;
@@ -137,21 +137,21 @@ public class SilverDepotAutoV extends OpMode{
                 stateMachineFlow++;
                 break;
             case 12:
-                robot.gStatTurn(.8,83); //seems to be over turning... so i lowered it
+                robot.gStatTurn(.65,87); //seems to be over turning... so i lowered it
                 stateMachineFlow++;
                 break;
             case 13:
-                robot.linearDrive(.65,54);
+                robot.linearDrive(.65,52);
                 // turn right
                 stateMachineFlow++;
                 break;
             case 14:
-                robot.gStatTurn(.8,30);
+                robot.gStatTurn(.65,34);
                 // move forward a little bit
                 stateMachineFlow++;
                 break;
             case 15:
-                robot.linearDrive(.65,15);
+                robot.linearDrive(.65,30);
                 // turn so you can start testing the color of the elements
                 stateMachineFlow++;
                 break;
