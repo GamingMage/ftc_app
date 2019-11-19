@@ -1,20 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+/*import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name="Silver: Depot View", group="Vuforia")
-//@Disabled
+@Disabled
 public class SilverDepotAutoV extends OpMode{
 
     private int stateMachineFlow;
     RoverDrive robot      = new RoverDrive();
-    LiftSystem lift       = new LiftSystem();
-    MineralTFOD view      = new MineralTFOD();
+    //LiftSystem lift       = new LiftSystem();
+    //MineralTFOD view      = new MineralTFOD();
 
-    MineralPosition goldPos = MineralPosition.UNKNOWN;
+    //MineralPosition goldPos = MineralPosition.UNKNOWN;
     double time;
     int initView =0;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -170,4 +171,4 @@ public class SilverDepotAutoV extends OpMode{
                 break;
         }
     }
-}//end of class
+}//end of class*/
