@@ -1,21 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-/*import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Silver: Depot View", group="Vuforia")
+@Autonomous(name="Blue: Depot View", group="Vuforia")
 @Disabled
-public class SilverDepotAutoV extends OpMode{
+public class BlueDepot extends OpMode{
 
     private int stateMachineFlow;
-    RoverDrive robot      = new RoverDrive();
-    //LiftSystem lift       = new LiftSystem();
-    //MineralTFOD view      = new MineralTFOD();
-
-    //MineralPosition goldPos = MineralPosition.UNKNOWN;
+    Robot robot      = new Robot();
     double time;
     int initView =0;
     private ElapsedTime     runtime = new ElapsedTime();
@@ -35,10 +31,6 @@ public class SilverDepotAutoV extends OpMode{
         telemetry.log().add("after hardware init");
 
         stateMachineFlow = 0;
-        lift.liftControl(.85,LiftDirection.DOWN);
-        lift.liftMotor.setPower(-.2);//hold robot on lander
-        telemetry.log().add("after hook on to lander");
-        telemetry.log().add("Case",stateMachineFlow);
     }
 
     @Override
@@ -54,15 +46,12 @@ public class SilverDepotAutoV extends OpMode{
         switch(stateMachineFlow){
             case 0:
                 runtime.reset();
-
-                telemetry.addData("GoldPos",goldPos);
-                telemetry.update();
                 time = getRuntime();
                 stateMachineFlow++;
                 break;
             case 1:
-                lift.liftHookOnOff(HookOnOff.DROP);
-                // drop the robot from lander and lower arm to robot
+                robot.linearDrive(0,0);
+                // moves robot forward
                 stateMachineFlow++;
                 break;
             case 2:
@@ -171,4 +160,4 @@ public class SilverDepotAutoV extends OpMode{
                 break;
         }
     }
-}//end of class*/
+}//end of class
