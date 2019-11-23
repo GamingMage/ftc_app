@@ -12,10 +12,21 @@ public class Robot {
 
     //This class will contain the drive motors on the robot, gyro sensor
     //Methods will include gyro aided turn, speed control (TeleOP), Odometry for autonomous(?)
-    public DcMotor leftBack = null;
+    public DcMotor leftBack  = null;
     public DcMotor rightBack = null;
+    public DcMotor leftFront = null;
+    public DcMotor rightFront= null;
+
+    static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;    // Orbital 20 Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+
     public BNO055IMU imu;
     Orientation lastAngles = new Orientation();
+    double globalAngle, power = .30, correction;
+
     private void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
