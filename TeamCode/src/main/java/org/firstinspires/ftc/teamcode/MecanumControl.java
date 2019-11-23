@@ -12,6 +12,11 @@ public class MecanumControl extends OpMode
 
     MecanumDrive robot = new MecanumDrive();
 
+    //Speed variables to allow for speed dilation
+    float rXSpeed;
+    float lXSpeed;
+    float lYSpeed;
+
     @Override
     public void init() {
         robot.init(hardwareMap);
@@ -30,7 +35,7 @@ public class MecanumControl extends OpMode
         telemetry.update();
 
         //Set everything to zero when neither stick is in use
-        if (gamepad1.left_stick_y==0 && gamepad1.left_stick_x==0 && gamepad1.right_stick_x==0){
+        if (gamepad1.left_stick_y>-.1 && gamepad1.left_stick_y<.1 && gamepad1.left_stick_x>-.1 && gamepad1.left_stick_x<.1 && gamepad1.right_stick_x>-.1 && gamepad1.right_stick_x<.1){
             robot.rightBack.setPower(0);
             robot.leftFront.setPower(0);
             robot.rightFront.setPower(0);
@@ -38,57 +43,69 @@ public class MecanumControl extends OpMode
         }
 
         //Control of left and right movement
-        if (gamepad1.left_stick_x!=0 && gamepad1.left_stick_y==0){
-            robot.rightBack.setPower(gamepad1.left_stick_x);
-            robot.leftFront.setPower(gamepad1.left_stick_x);
-            robot.rightFront.setPower(-gamepad1.left_stick_x);
-            robot.leftBack.setPower(-gamepad1.left_stick_x);
+        if ((gamepad1.left_stick_x>.1 || gamepad1.left_stick_x<-.1) && gamepad1.left_stick_y>-.1 && gamepad1.left_stick_y<.1){
+            robot.rightBack.setPower(lXSpeed);
+            robot.leftFront.setPower(lXSpeed);
+            robot.rightFront.setPower(-lXSpeed);
+            robot.leftBack.setPower(-lXSpeed);
         }
 
-        //Control of forward and backward movement (Kylie)
-        if (gamepad1.left_stick_x==0 && gamepad1.left_stick_y!=0) {
-            robot.rightBack.setPower(-gamepad1.left_stick_y);
-            robot.leftBack.setPower(-gamepad1.left_stick_y);
-            robot.rightFront.setPower(-gamepad1.left_stick_y);
-            robot.leftFront.setPower(-gamepad1.left_stick_y);
+        //Control of forward and backward movement
+        if (gamepad1.left_stick_x>-.1 && gamepad1.left_stick_x<.1 && (gamepad1.left_stick_y<-.1 || gamepad1.left_stick_y>.1)) {
+            robot.rightBack.setPower(-lYSpeed);
+            robot.leftBack.setPower(-lYSpeed);
+            robot.rightFront.setPower(-lYSpeed);
+            robot.leftFront.setPower(-lYSpeed);
         }
 
-        //Control of diagonal movement (S!am)
+        //Control of diagonal movement
         //Quadrant i
-        if (gamepad1.left_stick_x>0 && gamepad1.left_stick_y<0){
-            robot.leftFront.setPower(gamepad1.left_stick_x);
-            robot.rightBack.setPower(gamepad1.left_stick_x);
+        if (gamepad1.left_stick_x>=.1 && gamepad1.left_stick_y<=-.1){
+            robot.leftFront.setPower(lXSpeed);
+            robot.rightBack.setPower(lXSpeed);
             robot.leftBack.setPower(0);
             robot.rightFront.setPower(0);
         }
         //Quadrant ii
-        if (gamepad1.left_stick_x<0 && gamepad1.left_stick_y<0){
+        if (gamepad1.left_stick_x<=-.1 && gamepad1.left_stick_y<=-.1){
             robot.leftFront.setPower(0);
             robot.rightBack.setPower(0);
-            robot.leftBack.setPower(-gamepad1.left_stick_y);
-            robot.rightFront.setPower(-gamepad1.left_stick_y);
+            robot.leftBack.setPower(-lYSpeed);
+            robot.rightFront.setPower(-lYSpeed);
         }
         //Quadrant iii
-        if (gamepad1.left_stick_x<0 && gamepad1.left_stick_y>0){
-            robot.leftFront.setPower(gamepad1.left_stick_x);
-            robot.rightBack.setPower(gamepad1.left_stick_x);
+        if (gamepad1.left_stick_x<=-.1 && gamepad1.left_stick_y>=.1){
+            robot.leftFront.setPower(lXSpeed);
+            robot.rightBack.setPower(lXSpeed);
             robot.leftBack.setPower(0);
             robot.rightFront.setPower(0);
         }
         //Quadrant iv
-        if (gamepad1.left_stick_x>0 && gamepad1.left_stick_y>0){
+        if (gamepad1.left_stick_x>=.1 && gamepad1.left_stick_y>=.1){
             robot.leftFront.setPower(0);
             robot.rightBack.setPower(0);
-            robot.leftBack.setPower(-gamepad1.left_stick_y);
-            robot.rightFront.setPower(-gamepad1.left_stick_y);
+            robot.leftBack.setPower(-lYSpeed);
+            robot.rightFront.setPower(-lYSpeed);
         }
 
-        //Control of left and right turning (Perspective shift) (Kevin)
+        //Control of left and right turning (Perspective shift)
         if (gamepad1.right_stick_x!=0){
-            robot.rightBack.setPower(-gamepad1.right_stick_x);
-            robot.leftFront.setPower(gamepad1.right_stick_x);
-            robot.rightFront.setPower(-gamepad1.right_stick_x);
-            robot.leftBack.setPower(gamepad1.right_stick_x);
+            robot.rightBack.setPower(-rXSpeed);
+            robot.leftFront.setPower(rXSpeed);
+            robot.rightFront.setPower(-rXSpeed);
+            robot.leftBack.setPower(rXSpeed);
+        }
+
+        //Speed control (turbo mode)
+        if (gamepad1.left_bumper){
+            rXSpeed = gamepad1.right_stick_x;
+            lXSpeed  = gamepad1.left_stick_x;
+            lYSpeed  = gamepad1.left_stick_y;
+        }
+        if (!gamepad1.left_bumper){
+            rXSpeed = gamepad1.right_stick_x/2;
+            lXSpeed  = gamepad1.left_stick_x/2;
+            lYSpeed  = gamepad1.left_stick_y/2;
         }
     }
 }

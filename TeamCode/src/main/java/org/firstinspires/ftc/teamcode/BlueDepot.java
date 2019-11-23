@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -160,4 +160,4 @@ public class BlueDepot extends OpMode{
                 break;
         }
     }
-}//end of class
+}//end of class*/
