@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -131,7 +132,7 @@ public class RoverDrive
         double midArc = 2 * 3.14 * MID_RAD * (degrees/360);
         encoderDrive(speed, midArc, -midArc);
     }
-    public void pivotTurn(double speed, double degrees, RobotDirection direction){
+    /*public void pivotTurn(double speed, double degrees, RobotDirection direction){
         if (direction == RobotDirection.RIGHT){
             double midArc = 2 * 3.14 * MID_RAD * (degrees/360);
             encoderDrive(speed, midArc, 0);
@@ -139,7 +140,7 @@ public class RoverDrive
             double midArc = 2 * 3.14 * MID_RAD * (degrees/360);
             encoderDrive(speed, 0, midArc);
         }
-    }
+    }*/
     public void gStatTurn(double speed, int degrees){
         rotate(degrees,speed);
         //left is + degrees
