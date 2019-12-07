@@ -42,6 +42,17 @@ public class MecanumControl extends OpMode
             robot.leftBack.setPower(0);
         }
 
+        //Speed control (turbo mode)
+        if (gamepad1.left_bumper){
+            rXSpeed = gamepad1.right_stick_x;
+            lXSpeed  = gamepad1.left_stick_x;
+            lYSpeed  = gamepad1.left_stick_y;
+        }else {
+            rXSpeed = gamepad1.right_stick_x/2;
+            lXSpeed  = gamepad1.left_stick_x/2;
+            lYSpeed  = gamepad1.left_stick_y/2;
+        }
+
         //Control of left and right movement
         if ((gamepad1.left_stick_x>.1 || gamepad1.left_stick_x<-.1) && gamepad1.left_stick_y>-.1 && gamepad1.left_stick_y<.1){
             robot.rightBack.setPower(lXSpeed);
@@ -94,18 +105,6 @@ public class MecanumControl extends OpMode
             robot.leftFront.setPower(rXSpeed);
             robot.rightFront.setPower(-rXSpeed);
             robot.leftBack.setPower(rXSpeed);
-        }
-
-        //Speed control (turbo mode)
-        if (gamepad1.left_bumper){
-            rXSpeed = gamepad1.right_stick_x;
-            lXSpeed  = gamepad1.left_stick_x;
-            lYSpeed  = gamepad1.left_stick_y;
-        }
-        if (!gamepad1.left_bumper){
-            rXSpeed = gamepad1.right_stick_x/2;
-            lXSpeed  = gamepad1.left_stick_x/2;
-            lYSpeed  = gamepad1.left_stick_y/2;
         }
     }
 }
