@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+@Disabled
 @Autonomous(name="Blue: Depots", group="Test")
-public class BlueDepots {
+public class BlueDepots extends OpMode{
 
     private int stateMachineFlow;
     MecanumDrive robot = new MecanumDrive();
@@ -18,7 +18,7 @@ public class BlueDepots {
     double time;
     int initView = 0;
     private ElapsedTime runtime = new ElapsedTime();
-}
+
     @Override
     public void init() {
         msStuckDetectInit = 11500;
@@ -107,7 +107,7 @@ public class BlueDepots {
         }
     }
 
-
+}
 
 
 
