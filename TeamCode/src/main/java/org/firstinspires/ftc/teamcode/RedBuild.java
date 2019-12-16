@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+@Disabled
 @Autonomous(name="Red: Build", group="Test")
 public class RedBuild extends OpMode{
 
@@ -33,7 +33,7 @@ public class RedBuild extends OpMode{
 
     @Override
     public void loop() {
-        switch (stateMachineFlow){
+        switch (stateMachineFlow) {
             case 0:
                 runtime.reset();
                 time = getRuntime();
@@ -103,5 +103,6 @@ public class RedBuild extends OpMode{
                 //Move left 40 inches to park under red alliance bridge
                 stateMachineFlow++;
                 break;
+        }
     }
 }
