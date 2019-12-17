@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -22,6 +23,8 @@ public class MecanumDrive
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
+
+    private ElapsedTime period  = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;    // Orbital 20 Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -171,6 +174,25 @@ public class MecanumDrive
     } //end of encoder drive method
     public void linearDrive (double speed, double distance){
         encoderDrive(speed, distance,distance);
+    }
+    public void sideDrive (double speed, double distance){
+        //positive speed moves right and negative moves left
+        double runtime = period.time();
+
+        rightBack.setPower(speed);
+        leftFront.setPower(speed);
+        rightFront.setPower(speed);
+        leftBack.setPower(speed);
+
+        while (.6 > period.time() - runtime );
+
+        rightBack.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+    }
+    public void diagonalDrive (double speed, double distance){
+
     }
     private void rotate(int degrees, double power) {
         double leftPower, rightPower;
