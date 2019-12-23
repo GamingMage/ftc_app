@@ -42,6 +42,7 @@ public class BlueDepots extends OpMode{
                 break;
             case 1:
                 //Move forward
+                robot.linearDrive(.5,5);
                 stateMachineFlow++;
                 break;
             case 2:
@@ -50,34 +51,45 @@ public class BlueDepots extends OpMode{
                 break;
             case 3:
                 //Move forward and grab skystone
+                robot.linearDrive(.5,10);
+                placing.setClawWrist(ServoPosition.UP);
+                placing.setClawTurn(ServoPosition.TURN_OUT);
+                placing.setClawWrist(ServoPosition.DOWN);
+                placing.setClawGrip(ServoPosition.DOWN);
                 stateMachineFlow++;
                 break;
             case 4:
                 //Back up
+                robot.linearDrive(.5,-10);
                 stateMachineFlow++;
                 break;
             case 5:
                 //Move right
+                robot.sideDrive(.5,70);
                 stateMachineFlow++;
                 break;
             case 6:
                 //Move forward
+                robot.linearDrive(.5,15);
                 stateMachineFlow++;
                 break;
             case 7:
                 //Place skystone on foundation
+                placing.setClawGrip(ServoPosition.UP);
                 stateMachineFlow++;
                 break;
             case 8:
-                //Move left all the way to the leftmost wall
+                //Move left
+                robot.sideDrive(-.5,70);
                 stateMachineFlow++;
                 break;
             case 9:
-                //Use viewforia to sense a skystone, if not sky stone move right 10 inches
+                //Use viewforia to sense a skystone
                 stateMachineFlow++;
                 break;
             case 10:
                 //Move forward and grab skystone
+                
                 stateMachineFlow++;
                 break;
             case 11:
