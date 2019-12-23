@@ -26,11 +26,13 @@ public class Placing {
 
         // Define and initialize ALL installed servos
         clawGrip = hwMap.get(Servo.class, "grip_servo");
-        clawWrist = hwMap.get(Servo.class, "wrist_servo");
-        clawTurn = hwMap.get(Servo.class, "turn_servo");
+        //clawWrist = hwMap.get(Servo.class, "wrist_servo");
+        //clawTurn = hwMap.get(Servo.class, "turn_servo");
 
-        rPlateHook = hwMap.get(Servo.class, "right_hook");
-        lPlateHook = hwMap.get(Servo.class, "left_hook");
+        //rPlateHook = hwMap.get(Servo.class, "right_hook");
+        //lPlateHook = hwMap.get(Servo.class, "left_hook");
+
+        clawGrip.setPosition(.3);
     }
 
     //All servo values are subject to change
@@ -38,11 +40,11 @@ public class Placing {
     public void setClawGrip(ServoPosition position){
         //lower bar to hold brick
         if (position == ServoPosition.DOWN){
-            clawGrip.setPosition(1);
+            clawGrip.setPosition(.6);
         }
         //raise bar to release brick
         if (position == ServoPosition.UP){
-            clawGrip.setPosition(0);
+            clawGrip.setPosition(.25);
         }
     }
     public void setClawWrist(ServoPosition position){

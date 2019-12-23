@@ -11,6 +11,7 @@ public class MecanumControl extends OpMode
 {
 
     MecanumDrive robot = new MecanumDrive();
+    Placing      place = new Placing();
 
     //Speed variables to allow for speed dilation
     float rXSpeed;
@@ -20,6 +21,7 @@ public class MecanumControl extends OpMode
     @Override
     public void init() {
         robot.init(hardwareMap);
+        place.init(hardwareMap);
 
         msStuckDetectLoop = 8000;
 
@@ -105,6 +107,13 @@ public class MecanumControl extends OpMode
             robot.leftFront.setPower(rXSpeed);
             robot.rightFront.setPower(-rXSpeed);
             robot.leftBack.setPower(rXSpeed);
+        }
+
+        //Gripper control
+        if (gamepad1.dpad_down){
+            place.setClawGrip(ServoPosition.DOWN);
+        }if (gamepad1.dpad_up){
+            place.setClawGrip(ServoPosition.UP);
         }
     }
 }
